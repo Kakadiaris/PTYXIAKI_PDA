@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+             $table->foreignId('order_id')->constrained()->onDelete('cascade');
+        $table->decimal('amount', 10, 2); // Ποσό πληρωμής
+        $table->enum('method', ['cash', 'card', 'other'])->default('cash'); // Τρόπος πληρωμής
+        $table->timestamp('paid_at')->nullable(); // Πότε έγινε η πληρωμή
             $table->timestamps();
         });
     }
