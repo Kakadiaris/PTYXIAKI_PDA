@@ -15,11 +15,11 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
     // Ρόλοι
-    Route::middleware(['auth'])->get('/superuser', [SuperuserController::class, 'index'])->name('superuser.home');
-    Route::middleware(['auth'])->get('/admin', [AdminController::class, 'index'])->name('admin.home');
-    Route::middleware(['auth'])->get('/waiter', [WaiterController::class, 'index'])->name('waiter.home');
-    Route::middleware(['auth'])->get('/kitchen', [KitchenController::class, 'index'])->name('kitchen.home');
-    Route::middleware(['auth'])->get('/bar', [BarController::class, 'index'])->name('bar.home');
+Route::middleware(['auth', 'role:superuser'])->get('/superuser', [SuperuserController::class, 'index'])->name('superuser.home');
+    Route::middleware(['auth', 'role:admin'])->get('/admin', [AdminController::class, 'index'])->name('admin.home');
+    Route::middleware(['auth', 'role:waiter'])->get('/waiter', [WaiterController::class, 'index'])->name('waiter.home');
+    Route::middleware(['auth', 'role:kitchen'])->get('/kitchen', [KitchenController::class, 'index'])->name('kitchen.home');
+    Route::middleware(['auth', 'role:bar'])->get('/bar', [BarController::class, 'index'])->name('bar.home');
 
     // Dashboard κοινό (προαιρετικό)
     Route::get('/dashboard', function () {
