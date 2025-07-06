@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(MenuItemSeeder::class);
+
           $this->call([
         TableSeeder::class,
     ]);
@@ -23,4 +25,5 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
     }
+    
 }
