@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\MenuItem;
+
+use App\Models\OrderItem;
 
 class OrderController extends Controller
 {
@@ -25,8 +29,9 @@ class OrderController extends Controller
      */
     public function create()
     {
+        $menu_items = \App\Models\MenuItem::all();
         $tables = \App\Models\Table::all();
-        return view('orders.create', compact('tables'));
+        return view('orders.create', compact('tables', 'menu_items'));
     }
 
     /**
@@ -37,13 +42,40 @@ class OrderController extends Controller
         //
         $request->validate([
             'table_id' => 'required|exists:tables,id',
+            'menu_items' => 'required|array|min:1',
+            'menu_items.*.id' => 'required|exists:menu_items,id',
+            'menu_items.*.quantity' => 'required|integer|min:1',
         ]);
 
+        $total = 0;
         $order = new \App\Models\Order();
         $order->table_id = $request->table_id;
         $order->user_id = auth()->id(); // συνδέουμε τον σερβιτόρο
         $order->status = 'pending'; // αρχική κατάσταση
+        $order->total = 0;
         $order->save();
+
+        foreach ($request->menu_items as $menu_item_data) {
+            $menuItem = MenuItem::findOrFail($menu_item_data['id']);
+            $quantity = (int)$menu_item_data['quantity'];
+            $subtotal = $menuItem->price * $quantity;
+
+            // Δημιουργία εγγραφής στη συνδεδεμένη σχέση (order_items)
+            OrderItem::create([
+                'order_id' => $order->id,
+                'menu_item_id' => $menuItem->id,
+                'quantity' => $quantity,
+                'price' => $menuItem->price,
+                // 'subtotal' => $subtotal,
+            ]);
+
+            $total += $menuItem->price * $quantity;
+        }
+
+        // Ενημέρωση συνολικού ποσού
+        $order->total = $total;
+        $order->save();
+
 
         return redirect()->route('orders.index')->with('success', 'Η παραγγελία δημιουργήθηκε.');
     }
@@ -51,10 +83,13 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+
+    public function show(Order $order)
     {
-        //
+        $order->load(['table', 'items.menuItem']); // Φορτώνουμε και τα relations
+        return view('orders.show', compact('order'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
