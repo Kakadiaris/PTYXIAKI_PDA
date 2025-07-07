@@ -8,15 +8,18 @@ use App\Http\Controllers\WaiterController;
 use App\Http\Controllers\KitchenController;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TableController;
+
 use App\Models\Table;
 
 
 Route::get('/', function () {
     return redirect()->route('login'); // Απλό redirect στην login σελίδα
 });
-Route::get('/tables', function () {
-    return Table::all();
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tables/view', [TableController::class, 'index'])->name('tables.view');
 });
+
 
 // Προστατευμένα routes
 Route::middleware(['auth'])->group(function () {
