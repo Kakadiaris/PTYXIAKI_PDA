@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('pda.app')
 
 @section('content')
     <h1>Οι παραγγελίες μου</h1>
