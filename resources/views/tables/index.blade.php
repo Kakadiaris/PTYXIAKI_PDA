@@ -1,4 +1,4 @@
-@extends('pda.pda')
+@extends('layouts.pda')
 
 @section('content')
 <a href="{{ route('tables.create') }}" class="btn btn-primary mb-4">➕ Νέο Τραπέζι</a>

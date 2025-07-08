@@ -1,4 +1,4 @@
-@extends('pda.app')
+@extends('layouts.pda')
 
 @section('content')
 <div class="container">
