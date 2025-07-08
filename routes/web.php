@@ -17,8 +17,12 @@ Route::get('/', function () {
     return redirect()->route('login'); // Απλό redirect στην login σελίδα
 });
 Route::middleware(['auth'])->group(function () {
-    Route::get('/tables/view', [TableController::class, 'index'])->name('tables.view');
+    Route::get('/tables', [TableController::class, 'index'])->name('tables.view');
+    Route::get('/tables/create', [TableController::class, 'create'])->name('tables.create');
+    Route::post('/tables', [TableController::class, 'store'])->name('tables.store');
 });
+
+
 
 
 // Προστατευμένα routes

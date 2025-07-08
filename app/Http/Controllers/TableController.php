@@ -20,4 +20,23 @@ class TableController extends Controller
 
         return view('tables.index', compact('tables'));
     }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'zone'=>'required|string|max:10',
+            'number'=>'required|integer',
+            'status'=>'required|in:free,pending,paid'
+        ]);
+        Table::create([
+            'zone' => $request->zone,
+            'number'=>$request->number,
+            'status'=>$request->status,
+        ]);
+        return redirect()->route('tables.view')->with('success','Tο τραπέζι δημιουργήθηκε');
+    }
+    public function create()
+{
+    return view('tables.create');
+}
+
 }

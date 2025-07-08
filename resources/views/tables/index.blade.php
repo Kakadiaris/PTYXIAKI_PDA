@@ -1,10 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+<a href="{{ route('tables.create') }}" class="btn btn-primary mb-4">➕ Νέο Τραπέζι</a>
+
 <div class="container text-center">
     <h2 class="mb-4">Τραπέζια</h2>
 
     <div class="row justify-content-center">
+        
         @foreach ($tables as $table)
             <div class="col-6 col-md-3 mb-3">
                 <a href="#"
