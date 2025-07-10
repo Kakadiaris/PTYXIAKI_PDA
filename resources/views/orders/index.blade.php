@@ -9,7 +9,7 @@
             @foreach ($orders as $order)
                 <li>
                     #{{ $order->id }} | Τραπέζι: {{ $order->table_id }} | Κατάσταση: {{ $order->status }}
-                    <a href="{{ route('orders.show', $order) }}" class="btn btn-sm btn-primary">🔍 Προβολή</a>
+                    <a href="{{ route('orders.show', $order) }}" class="btn btn-sm btn-primary"> Προβολή</a>
 
                 </li>
             @endforeach
