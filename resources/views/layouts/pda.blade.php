@@ -10,6 +10,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
+@php
+    $role = auth()->user()->role;
+    $homeRoute = match ($role) {
+      'superuser'=> '/superuser',
+        'admin' => '/admin',
+        'kitchen' => '/kitchen',
+        'waiter' => '/waiter',
+        'bar' => '/bar',
+    };
+@endphp
 
 <body>
     <div class="d-flex pan_back">
@@ -27,7 +37,7 @@
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="#" class="nav-link active">
+                        <a href="{{ url($homeRoute) }}" class="nav-link active">
                             <i class="bi bi-house me-2"></i> Αρχική
                         </a>
                     </li>
@@ -37,12 +47,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="/pda-app/public/orders" class="nav-link text-white">
                             <i class="bi bi-table me-2"></i> Παραγγελίες
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="/pda-app/public/menu" class="nav-link text-white">
                             <i class="bi bi-box-seam me-2"></i> Προϊόντα
                         </a>
                     </li>
