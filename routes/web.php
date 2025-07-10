@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\MenuItemController;
 
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('orders', OrderController::class);
     });
 
+});
+Route::middleware(['auth'])->group(function (){
+    Route::get('/menu',[MenuItemController::class, 'index'])->name('menu.index');
 });
 
 // Φόρτωση auth routes
