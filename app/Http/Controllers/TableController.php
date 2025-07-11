@@ -23,20 +23,25 @@ class TableController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'zone'=>'required|string|max:10',
-            'number'=>'required|integer',
-            'status'=>'required|in:free,pending,paid'
+            'zone' => 'required|string|max:10',
+            'number' => 'required|integer',
+            'status' => 'required|in:free,pending,paid'
         ]);
+        $exists = Table::where('zone', $request->zone)
+            ->where('number', $request->number)
+            ->exists();
+        if ($exists) {
+            return back()->withErrors(['zone' => 'Το τραπέζι αυτό υπάρχει ήδη'])->withInput();
+        }
         Table::create([
             'zone' => $request->zone,
-            'number'=>$request->number,
-            'status'=>$request->status,
+            'number' => $request->number,
+            'status' => $request->status,
         ]);
-        return redirect()->route('tables.view')->with('success','Tο τραπέζι δημιουργήθηκε');
+        return redirect()->route('tables.view')->with('success', 'Tο τραπέζι δημιουργήθηκε');
     }
     public function create()
-{
-    return view('tables.create');
-}
-
+    {
+        return view('tables.create');
+    }
 }
