@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\MenuItem;
-
+use App\Models\Payment;
 use App\Models\OrderItem;
 
 class OrderController extends Controller
@@ -75,7 +75,12 @@ class OrderController extends Controller
         // Ενημέρωση συνολικού ποσού
         $order->total = $total;
         $order->save();
-
+        Payment::create([
+            'order_id' => $order->id,
+            'amount' => $total,
+            'method' => null,
+            'paid_at' => null,
+        ]);
 
         return redirect()->route('orders.index')->with('success', 'Η παραγγελία δημιουργήθηκε.');
     }

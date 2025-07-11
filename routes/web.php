@@ -10,6 +10,7 @@ use App\Http\Controllers\KitchenController;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\PaymentController;
 
 use App\Models\Table;
 
@@ -55,6 +56,11 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function (){
     Route::get('/menu',[MenuItemController::class, 'index'])->name('menu.index');
 });
+
+
+//Routes για πληρωμες 
+Route::get('/payments/{payment}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
+Route::put('/payments/{payment}', [PaymentController::class, 'update'])->name('payments.update');
 
 // Φόρτωση auth routes
 require __DIR__ . '/auth.php';
