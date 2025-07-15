@@ -38,9 +38,13 @@
         @else
             <p>Δεν υπάρχουν παραγγελίες.</p>
         @endif
-
-        <div class="new-order-btn-wrapper">
-            <a href="{{ route('orders.create') }}" class="btn btn-primary new-order-btn">Νέα Παραγγελία</a>
-        </div>
+        @php
+            $role = auth()->user()->role;
+        @endphp
+        @if (!in_array($role, ['kitchen', 'bar']))
+            <div class="new-order-btn-wrapper">
+                <a href="{{ route('orders.create') }}" class="btn btn-primary new-order-btn">Νέα Παραγγελία</a>
+            </div>
+        @endif
     </div>
 @endsection

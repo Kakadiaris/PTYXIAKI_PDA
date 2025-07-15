@@ -18,7 +18,7 @@ class OrderController extends Controller
         $user = auth()->user();
         $role = $user->role;
 
-        if (in_array($user->role, ['admin', 'superuser'])) {
+        if (in_array($user->role, ['admin', 'superuser', 'kitchen', 'bar'])) {
             $orders = \App\Models\Order::latest()->get(); // όλες οι παραγγελίες
         } else {
             $orders = \App\Models\Order::where('user_id', $user->id)->latest()->get(); // μόνο του χρήστη
@@ -29,6 +29,10 @@ class OrderController extends Controller
                     return $item->menuItem && $item->menuItem->target === $role;
                 });
             }
+            // Εδώ κρατάμε ΜΟΝΟ παραγγελίες που έχουν τουλάχιστον 1 item για τον ρόλο
+            $orders = $orders->filter(function ($order) {
+                return $order->items->count() > 0;
+            })->values(); // reset keys
         }
         return view('orders.index', compact('orders'));
     }
