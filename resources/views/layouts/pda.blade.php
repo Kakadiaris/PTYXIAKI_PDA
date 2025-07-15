@@ -45,7 +45,7 @@
                         </a>
                     </li>
                     @php
-                        $rolesWithTablesAccess = ['admin', 'kitchen', 'superuser'];
+                        $rolesWithTablesAccess = ['admin', 'waiter', 'superuser'];
                     @endphp
                     @if (in_array($role, $rolesWithTablesAccess))
                         <li>
