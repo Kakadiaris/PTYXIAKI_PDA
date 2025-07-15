@@ -16,10 +16,19 @@ class OrderController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $role = $user->role;
+
         if (in_array($user->role, ['admin', 'superuser'])) {
             $orders = \App\Models\Order::latest()->get(); // όλες οι παραγγελίες
         } else {
             $orders = \App\Models\Order::where('user_id', $user->id)->latest()->get(); // μόνο του χρήστη
+        }
+        if (in_array($role, ['bar', 'kitchen'])) {
+            foreach ($orders as $order) {
+                $order->items = $order->items->filter(function ($item) use ($role) {
+                    return $item->menuItem && $item->menuItem->target === $role;
+                });
+            }
         }
         return view('orders.index', compact('orders'));
     }
