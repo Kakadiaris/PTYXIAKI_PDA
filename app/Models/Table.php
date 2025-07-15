@@ -12,4 +12,9 @@ class Table extends Model
         'number',
         'status',
     ];
+    public function zone()
+{
+    return $this->belongsTo(Zone::class);
+}
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Zone;
 use App\Models\Table;
 use Illuminate\Http\Request;
 
@@ -33,11 +34,29 @@ class TableController extends Controller
         if ($exists) {
             return back()->withErrors(['zone' => 'Το τραπέζι αυτό υπάρχει ήδη'])->withInput();
         }
+        // Βρες τη ζώνη με βάση το όνομα (π.χ. "Ν")
+        $zone = Zone::where('value', $request->zone)->first();
+
+        if (!$zone) {
+            return back()->withErrors(['zone' => 'Η ζώνη που έδωσες δεν υπάρχει.'])->withInput();
+        }
+
+        // Έλεγχος αν υπάρχει ήδη τραπέζι στη ζώνη αυτή με το ίδιο νούμερο
+        $exists = Table::where('zone_id', $zone->id)
+            ->where('number', $request->number)
+            ->exists();
+
+        if ($exists) {
+            return back()->withErrors(['zone' => 'Το τραπέζι αυτό υπάρχει ήδη στη ζώνη.'])->withInput();
+        }
+
         Table::create([
+            'zone_id' => $zone->id,
             'zone' => $request->zone,
             'number' => $request->number,
             'status' => $request->status,
         ]);
+        $zone->increment('tables_count');
         return redirect()->route('tables.view')->with('success', 'Tο τραπέζι δημιουργήθηκε');
     }
     public function create()
