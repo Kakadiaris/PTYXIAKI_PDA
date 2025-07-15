@@ -96,6 +96,8 @@ class OrderController extends Controller
     }
 
 
+
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -115,15 +117,17 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Order $order)
     {
-        //
+        $order->delete();
+
+        return redirect()->route('orders.index')->with('success', 'Η παραγγελία διαγράφηκε.');
     }
     public function complete(Order $order)
-{
-    $order->status = 'paid';
-    $order->save();
+    {
+        $order->status = 'paid';
+        $order->save();
 
-    return redirect()->back()->with('success', 'Η παραγγελία ολοκληρώθηκε.');
-}
+        return redirect()->back()->with('success', 'Η παραγγελία ολοκληρώθηκε.');
+    }
 }

@@ -53,6 +53,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('orders', OrderController::class);
     });
     Route::post('/orders/{order}/complete', [\App\Http\Controllers\OrderController::class, 'complete'])->name('orders.complete');
+    Route::delete('/orders/{order}', [\App\Http\Controllers\OrderController::class, 'destroy'])->name('orders.destroy');
+
 
 
 });

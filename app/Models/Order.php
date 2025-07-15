@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Table;
 use App\Models\OrderItem; 
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+        use SoftDeletes;
+
     public function table()
     {
         return $this->belongsTo(Table::class);
