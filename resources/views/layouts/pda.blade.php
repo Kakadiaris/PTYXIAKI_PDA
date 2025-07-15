@@ -15,7 +15,7 @@
 @php
     $role = auth()->user()->role;
     $homeRoute = match ($role) {
-      'superuser'=> '/superuser',
+        'superuser' => '/superuser',
         'admin' => '/admin',
         'kitchen' => '/kitchen',
         'waiter' => '/waiter',
@@ -24,7 +24,7 @@
 @endphp
 
 <body>
-    
+
     <div class="d-flex pan_back">
         {{-- Sidebar --}}
         <div class="d-flex" style="min-height: 100vh;">
@@ -44,11 +44,16 @@
                             <i class="bi bi-house me-2"></i> Αρχική
                         </a>
                     </li>
-                    <li>
-                        <a href="/pda-app/public/tables" class="nav-link text-white">
-                            <i class="bi bi-speedometer2 me-2"></i> Tables
-                        </a>
-                    </li>
+                    @php
+                        $rolesWithTablesAccess = ['admin', 'kitchen', 'superuser'];
+                    @endphp
+                    @if (in_array($role, $rolesWithTablesAccess))
+                        <li>
+                            <a href="/pda-app/public/tables" class="nav-link text-white">
+                                <i class="bi bi-speedometer2 me-2"></i> Tables
+                            </a>
+                        </li>
+                    @endif
                     <li>
                         <a href="/pda-app/public/orders" class="nav-link text-white">
                             <i class="bi bi-table me-2"></i> Παραγγελίες
