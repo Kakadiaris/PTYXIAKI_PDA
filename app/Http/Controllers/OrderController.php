@@ -119,4 +119,11 @@ class OrderController extends Controller
     {
         //
     }
+    public function complete(Order $order)
+{
+    $order->status = 'paid';
+    $order->save();
+
+    return redirect()->back()->with('success', 'Η παραγγελία ολοκληρώθηκε.');
+}
 }

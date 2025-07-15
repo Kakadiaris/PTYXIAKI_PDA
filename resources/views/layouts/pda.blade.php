@@ -3,6 +3,8 @@
 
 <head>
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     <meta charset="UTF-8">
     <title>PDA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +24,7 @@
 @endphp
 
 <body>
+    
     <div class="d-flex pan_back">
         {{-- Sidebar --}}
         <div class="d-flex" style="min-height: 100vh;">

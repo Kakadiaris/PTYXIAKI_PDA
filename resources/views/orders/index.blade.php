@@ -1,21 +1,40 @@
 @extends('layouts.pda')
 
 @section('content')
-    <h1>Οι παραγγελίες μου</h1>
+    <div class="orders-wrapper">
 
 
-    @if ($orders->count())
-        <ul>
+        @if ($orders->count())
             @foreach ($orders as $order)
-                <li>
-                    #{{ $order->id }} | Τραπέζι: {{ $order->table_id }} | Κατάσταση: {{ $order->status }}
-                    <a href="{{ route('orders.show', $order) }}" class="btn btn-sm btn-primary"> Προβολή</a>
+                <div class="order-box {{ $order->status === 'completed' ? 'order-completed' : '' }}">
+                    <div class="order-items">
+                        @foreach ($order->items as $item)
+                            <div>{{ $item->quantity }} {{ $item->menuItem->name }}
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="order-actions">
+                        <a href="{{ route('orders.show', $order) }}" class="btn btn-dark">Προβολή</a>
 
-                </li>
+                        @if ($order->status === 'paid')
+                            <span class="btn btn-dark disabled">Η παραγγελία έχει ολοκληρωθεί</span>
+                        @elseif ($order->status === 'completed')
+                            <span class="btn btn-dark disabled">Ολοκληρωμένη</span>
+                        @else
+                            <form action="{{ route('orders.complete', $order) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-dark">Ολοκλήρωση</button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
             @endforeach
-        </ul>
-        
-    @else
-        <p>Δεν υπάρχουν παραγγελίες.</p>
-    @endif
+        @else
+            <p>Δεν υπάρχουν παραγγελίες.</p>
+        @endif
+
+        <div class="new-order-btn-wrapper">
+            <a href="{{ route('orders.create') }}" class="btn btn-primary new-order-btn">Νέα Παραγγελία</a>
+        </div>
+    </div>
 @endsection

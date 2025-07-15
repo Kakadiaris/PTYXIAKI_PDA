@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\MenuItemController;
+use App\Http\Controllers\ZoneController;
 
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::resource('orders', OrderController::class);
     });
+    Route::post('/orders/{order}/complete', [\App\Http\Controllers\OrderController::class, 'complete'])->name('orders.complete');
+
 
 });
 Route::middleware(['auth'])->group(function (){
@@ -61,6 +64,13 @@ Route::middleware(['auth'])->group(function (){
 //Routes για πληρωμες 
 Route::get('/payments/{payment}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
 Route::put('/payments/{payment}', [PaymentController::class, 'update'])->name('payments.update');
+
+
+//Routes για δημιουργία zones
+Route::get('/zones/create', [ZoneController::class, 'create'])->name('zones.create');
+Route::post('/zones', [ZoneController::class, 'store'])->name('zones.store');
+Route::get('/zones', [ZoneController::class, 'index'])->name('zones.index');
+
 
 // Φόρτωση auth routes
 require __DIR__ . '/auth.php';
