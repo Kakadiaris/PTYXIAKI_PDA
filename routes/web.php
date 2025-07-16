@@ -61,6 +61,13 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function (){
     Route::get('/menu',[MenuItemController::class, 'index'])->name('menu.index');
 });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/menu/create', [MenuItemController::class, 'create'])->name('menu.create');
+    Route::post('/menu', [MenuItemController::class, 'store'])->name('menu.store');
+    Route::delete('/menu/{menu}', [MenuItemController::class, 'destroy'])->name('menu.destroy');
+
+});
+
 
 
 //Routes για πληρωμες 
