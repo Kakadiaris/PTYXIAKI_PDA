@@ -138,6 +138,11 @@ class OrderController extends Controller
     }
     public function complete(Order $order)
     {
+        if (!$order->payment || !$order->payment->method) {
+            return redirect()->route('payments.edit', $order->payment->id)
+                ->with('error', 'Πρέπει να δηλωθεί τρόπος πληρωμής πριν την ολοκλήρωση.');
+        }
+
         $order->status = 'paid';
         $order->save();
 
