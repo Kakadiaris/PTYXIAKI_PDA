@@ -65,8 +65,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
-                            <i class="bi bi-people me-2"></i> Πελάτες
+                        <a href="/pda-app/public/statistics/week" class="nav-link text-white">
+                            <i class="bi bi-people me-2"></i> Στατιστικά
                         </a>
                     </li>
                 </ul>

@@ -14,7 +14,50 @@
         <option value="card" {{ $payment->method === 'card' ? 'selected' : '' }}>Κάρτα</option>
     </select>
 
-    <button type="submit">Ολοκλήρωση</button>
+    <hr>
 
+    <h4>Επιλογή προϊόντων Πληρωμής</h4>
+
+    @foreach($payment->order->items as $item)
+        <div class="form-check">
+            <input class="form-check-input item-checkbox"
+                   type="checkbox"
+                   name="items[]"
+                   value="{{ $item->id }}"
+                   data-price="{{ $item->price * $item->quantity }}"
+                   id="item-{{ $item->id }}">
+
+            <label class="form-check-label" for="item-{{ $item->id }}">
+                {{ $item->menuItem->name }} ({{ $item->quantity }} x {{ number_format($item->price, 2) }}€)
+            </label>
+        </div>
+    @endforeach
+
+    <input type="hidden" name="amount" id="payment-amount" value="0">
+    <p class="mt-2">Ποσό πληρωμής: <strong><span id="calculated-amount">0.00€</span></strong></p>
+
+    <button type="submit" class="btn btn-success mt-3">Ολοκλήρωση Πληρωμής</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    const amountField = document.getElementById('payment-amount');
+    const amountDisplay = document.getElementById('calculated-amount');
+
+    function updateAmount() {
+        let total = 0;
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                total += parseFloat(cb.dataset.price);
+            }
+        });
+        amountField.value = total.toFixed(2);
+        amountDisplay.textContent = total.toFixed(2) + '€';
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateAmount));
+});
+</script>
 
 @endsection
