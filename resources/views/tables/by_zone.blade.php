@@ -15,12 +15,12 @@
                         style="font-size: 22px; border-radius: 16px;
                           background-color:
                             {{ $table->status === 'free' ? '#28a745' : ($table->status === 'pending' ? '#ffc107' : '#dc3545') }};">
-                        {{ $table->zone }}{{ $table->number }}
+                        {{ $table->zone->value }}{{ $table->number }}
                     </a>
 
                     {{-- Κουμπί διαγραφής --}}
                     <form action="{{ route('tables.destroy', $table->id) }}" method="POST"
-                        onsubmit="return confirm('Είσαι σίγουρος ότι θέλεις να διαγράψεις το τραπέζι {{ $table->zone }}{{ $table->number }};')"
+                        onsubmit="return confirm('Είσαι σίγουρος ότι θέλεις να διαγράψεις το τραπέζι {{ $table->zone->value }}{{ $table->number }};')"
                         class="position-absolute top-0 end-0 mt-1 me-1">
                         @csrf
                         @method('DELETE')
