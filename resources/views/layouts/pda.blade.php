@@ -69,6 +69,11 @@
                             <i class="bi bi-people me-2"></i> Στατιστικά
                         </a>
                     </li>
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <i class="bi bi-people me-2"></i> Κρατήσεις
+                        </a>
+                    </li>
                 </ul>
                 <hr>
                 <div class="dropdown">
