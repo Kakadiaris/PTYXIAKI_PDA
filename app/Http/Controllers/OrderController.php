@@ -114,17 +114,58 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Order  $order)
     {
-        //
+
+        $order->load(['items.MenuItem']); // Φορτώνει τα είδη της παραγγελιας
+        $menu_items = MenuItem::all(); // Ολα τα είδη για επιλογή
+        $tables = \App\Models\Table::all(); // Oλα τα τραπέζια για αλλαγή
+
+        return view('orders.edit', compact('order', 'menu_items', 'tables'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Order $order)
     {
-        //
+
+        $request->validate([
+            'table_id' => 'required|exists:tables,id',
+            'menu_items' => 'required|array|min:1',
+            'menu_items.*.id' => 'required|exists:menu_items,id',
+            'menu_items.*.quantity' => 'required|integer|min:1',
+        ]);
+        $order->table_id = $request->table_id;
+        $order->save();
+        //Διαγραφη προηγουμενων αντικειμενων αν θελω
+        $order->items()->delete();
+
+        $total = 0;
+
+        //Προσθηκη νεων αντικειμενων
+        foreach ($request->menu_items as $menu_item_data) {
+            $menuItem = MenuItem::findOrFail($menu_item_data['id']);
+            $quantity = (int) $menu_item_data['quantity'];
+            $subtotal = $menuItem->price * $quantity;
+
+            OrderItem::create([
+                'order_id' => $order->id,
+                'menu_item_id' => $menuItem->id,
+                'quantity' => $quantity,
+                'price' => $menuItem->price,
+            ]);
+
+            $total += $subtotal;
+        }
+        $order->total = $total;
+        $order->save();
+
+        if ($order->payment) {
+            $order->payment->update(['amount' => $total]);
+        }
+
+        return redirect()->route('orders.index')->with('success', 'Η παραγγελία ενημερώθηκε.');
     }
 
     /**
