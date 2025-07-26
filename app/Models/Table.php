@@ -1,20 +1,21 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Table extends Model
 {
+    use SoftDeletes;
+
     //
-     protected $fillable = [
+    protected $fillable = [
         'zone',
         'number',
         'status',
     ];
     public function zone()
-{
-    return $this->belongsTo(Zone::class);
-}
-
+    {
+        return $this->belongsTo(Zone::class);
+    }
 }
