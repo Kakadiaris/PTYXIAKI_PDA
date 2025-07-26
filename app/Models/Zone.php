@@ -16,4 +16,8 @@ class Zone extends Model
     {
         return $this->hasMany(Table::class);
     }
+    public function getRouteKeyName()
+    {
+        return 'value'; // Να βρίσκει τις ζώνες με βάση το value, όχι το ID
+    }
 }

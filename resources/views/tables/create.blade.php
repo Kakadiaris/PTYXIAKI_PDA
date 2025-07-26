@@ -19,12 +19,13 @@
 
             <div class="mb-3">
                 <label class="form-label">Ζώνη</label>
-                <select name="zone" class="form-control" required>
+                <select name="zone_id" class="form-control" required>
                     <option value="" disabled selected>Επιλέξτε ζώνη</option>
                     @foreach ($zones as $zone)
-                        <option value="{{ $zone->value }}">{{ $zone->value }}</option>
+                        <option value="{{ $zone->id }}">{{ $zone->value }}</option>
                     @endforeach
                 </select>
+
             </div>
 
             <div class="mb-3">

@@ -26,12 +26,19 @@
                                 <button type="submit" class="btn btn-success">Ολοκλήρωση</button>
                             </form>
                         @endif
-                        <form action="{{ route('orders.destroy', $order) }}" method="POST"
-                            onsubmit="return confirm('Είσαι σίγουρος;');" style="display:inline class="mt-3">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Διαγραφή Παραγγελίας</button>
-                        </form>
+                        @php
+                            $userRole = auth()->user()->role;
+                        @endphp
+
+                        @if ($userRole === 'superuser')
+                            <form action="{{ route('orders.destroy', $order) }}" method="POST"
+                                onsubmit="return confirm('Είσαι σίγουρος;');" style="display:inline class="mt-3">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Διαγραφή Παραγγελίας</button>
+                            </form>
+                        @endif
+
                     </div>
                 </div>
             @endforeach

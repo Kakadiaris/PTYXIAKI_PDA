@@ -25,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tables', [TableController::class, 'index'])->name('tables.view');
     Route::get('/tables/create', [TableController::class, 'create'])->name('tables.create');
     Route::post('/tables', [TableController::class, 'store'])->name('tables.store');
+    Route::delete('/tables/{table}', [TableController::class, 'destroy'])->name('tables.destroy');
+
 });
 
 
@@ -81,6 +83,10 @@ Route::put('/payments/{payment}', [PaymentController::class, 'update'])->name('p
 Route::get('/zones/create', [ZoneController::class, 'create'])->name('zones.create');
 Route::post('/zones', [ZoneController::class, 'store'])->name('zones.store');
 Route::get('/zones', [ZoneController::class, 'index'])->name('zones.index');
+Route::delete('/zones/{zone}', [ZoneController::class, 'destroy'])->name('zones.destroy');
+Route::get('/zones/{zone}/tables', [TableController::class, 'byZone'])->name('tables.byZone');
+
+
 
 
 //Routes για στατιστικα

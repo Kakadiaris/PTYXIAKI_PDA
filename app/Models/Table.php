@@ -10,7 +10,7 @@ class Table extends Model
 
     //
     protected $fillable = [
-        'zone',
+        'zone_id',
         'number',
         'status',
     ];
