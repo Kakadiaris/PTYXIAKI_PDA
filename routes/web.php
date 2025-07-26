@@ -12,6 +12,8 @@ use App\Http\Controllers\BarController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StatisticController;
+
 
 use App\Models\Table;
 
@@ -80,6 +82,13 @@ Route::get('/zones/create', [ZoneController::class, 'create'])->name('zones.crea
 Route::post('/zones', [ZoneController::class, 'store'])->name('zones.store');
 Route::get('/zones', [ZoneController::class, 'index'])->name('zones.index');
 
+
+//Routes για στατιστικα
+Route::get('/statistics/week', [StatisticController::class, 'showCurrentWeekStatistics']);
+Route::get('/statistics/month', [StatisticController::class, 'showCurrentMonthStatistics']);
+Route::get('/statistics/previous-month', [StatisticController::class, 'showPreviousMonthStatistics']);
+Route::get('/statistics/date', [StatisticController::class, 'showStatisticsByDate']);
+Route::get('/statistics/period', [StatisticController::class, 'showStatisticsByPeriod']);
 
 // Φόρτωση auth routes
 require __DIR__ . '/auth.php';

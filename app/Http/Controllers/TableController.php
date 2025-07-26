@@ -61,6 +61,6 @@ class TableController extends Controller
     }
     public function create()
     {
-        return view('tables.create');
-    }
+    $zones = Zone::orderBy('value')->get();
+    return view('tables.create', compact('zones'));    }
 }
