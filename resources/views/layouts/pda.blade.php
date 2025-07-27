@@ -93,12 +93,15 @@
                         <strong>{{ auth()->user()->name ?? 'Χρήστης' }}</strong>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">Ρυθμίσεις</a></li>
-                        <li><a class="dropdown-item" href="#">Προφίλ</a></li>
                         <li>
-                            <hr class="dropdown-divider">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                    class="dropdown-item text-white bg-transparent border-0 w-100 text-start">
+                                    Αποσύνδεση
+                                </button>
+                            </form>
                         </li>
-                        <li><a class="dropdown-item" href="#">Αποσύνδεση</a></li>
                     </ul>
                 </div>
             </nav>
