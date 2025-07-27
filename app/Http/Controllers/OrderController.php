@@ -64,9 +64,15 @@ class OrderController extends Controller
         $order = new \App\Models\Order();
         $order->table_id = $request->table_id;
         $order->user_id = auth()->id(); // συνδέουμε τον σερβιτόρο
-        $order->status = 'pending'; // αρχική κατάσταση
+        $order->status = 'pending'; // αρχική κατάσταση για παραγγελια
         $order->total = 0;
+        if ($order->table) {
+            $order->table->status = 'pending';// αρχική κατάσταση τραπεζιού
+            $order->table->save();
+        }
         $order->save();
+
+
 
         foreach ($request->menu_items as $menu_item_data) {
             $menuItem = MenuItem::findOrFail($menu_item_data['id']);
@@ -174,6 +180,10 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
+        if ($order->table) {
+            $order->table->status = 'free';
+            $order->table->save();
+        }
 
         return redirect()->route('orders.index')->with('success', 'Η παραγγελία διαγράφηκε.');
     }
@@ -187,6 +197,11 @@ class OrderController extends Controller
         $order->status = 'paid';
         $order->save();
 
+        // Αλλαγή του status του τραπεζιού σε 'paid'
+        if ($order->table) {
+            $order->table->status = 'paid';
+            $order->table->save();
+        }
         return redirect()->back()->with('success', 'Η παραγγελία ολοκληρώθηκε.');
     }
 }

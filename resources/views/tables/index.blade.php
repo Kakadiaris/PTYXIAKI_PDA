@@ -16,7 +16,7 @@
                         data-bs-target="{{ $table->status === 'free' ? '#tableModal' . $table->id : '' }}"
                         style="font-size: 22px; border-radius: 16px;
                        background-color:
-                           {{ $table->status === 'free' ? '#28a745' : ($table->status === 'pending' ? '#ffc107' : '#dc3545') }};">
+                           {{ $table->status === 'free' ? '#28a745' : ($table->status === 'pending' ? '#ffc107' : ($table->status === 'reserved' ? '#000000' : '#dc3545')) }};">
                         {{ $table->zone->value }}{{ $table->number }}
                     </a>
 

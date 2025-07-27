@@ -40,7 +40,7 @@
 
                             @if (auth()->user()->role === 'superuser')
                                 <td>
-                                    <form action="{{ route('zones.destroy', $zone->id) }}" method="POST"
+                                    <form action="{{ route('zones.destroy', $zone->value) }}" method="POST"
                                         onsubmit="return confirm('Διαγραφή ζώνης {{ $zone->value }};');">
                                         @csrf
                                         @method('DELETE')
