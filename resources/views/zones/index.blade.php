@@ -20,6 +20,10 @@
                         <th>#</th>
                         <th>Όνομα Ζώνης</th>
                         <th>Ημ/νία Δημιουργίας</th>
+                        <th>Τραπέζια</th>
+                        @if (auth()->user()->role === 'superuser')
+                            <th>Ενέργειες</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +32,11 @@
                             <td>{{ $zone->id }}</td>
                             <td>{{ $zone->value }}</td>
                             <td>{{ $zone->created_at->format('d/m/Y H:i') }}</td>
+                            <td>
+                                <a href="{{ route('tables.byZone', $zone->value) }}" class="btn btn-sm btn-secondary">
+                                    🪑 Δες Τραπέζια
+                                </a>
+                            </td>
 
                             @if (auth()->user()->role === 'superuser')
                                 <td>
