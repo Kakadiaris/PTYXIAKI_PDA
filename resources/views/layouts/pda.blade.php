@@ -77,7 +77,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="/pda-app/public/reservations" class="nav-link text-white">
                             <i class="bi bi-people me-2"></i> Κρατήσεις
                         </a>
                     </li>

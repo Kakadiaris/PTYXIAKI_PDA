@@ -52,6 +52,11 @@
             </div>
         @endif
 
+        {{-- 👇 Κουμπί δημιουργίας κράτησης --}}
+        <div class="text-center mt-4">
+            <a href="{{ route('reservations.create') }}" class="btn btn-primary">➕ Νέα Κράτηση</a>
+        </div>
+
         <a href="{{ route('tables.view') }}" class="btn btn-secondary mt-4">↩ Επιστροφή στα Τραπέζια</a>
     </div>
 @endsection
