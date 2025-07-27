@@ -49,15 +49,15 @@
                     @endphp
                     @if (in_array($role, $rolesWithTablesAccess))
                         <li>
-                            <a href="/pda-app/public/tables" class="nav-link text-white">
-                                <i class="bi bi-speedometer2 me-2"></i> Tables
+                            <a href="/pda-app/public/zones" class="nav-link text-white">
+                                <i class="bi bi-speedometer2 me-2"></i> Zones
                             </a>
                         </li>
                     @endif
-                         @if (in_array($role, $rolesWithTablesAccess))
+                    @if (in_array($role, $rolesWithTablesAccess))
                         <li>
-                            <a href="/pda-app/public/zones" class="nav-link text-white">
-                                <i class="bi bi-speedometer2 me-2"></i> Zones
+                            <a href="/pda-app/public/tables" class="nav-link text-white">
+                                <i class="bi bi-speedometer2 me-2"></i> Tables
                             </a>
                         </li>
                     @endif
@@ -67,20 +67,22 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/pda-app/public/reservations" class="nav-link text-white">
+                            <i class="bi bi-people me-2"></i> Κρατήσεις
+                        </a>
+                    </li>
+                    <li>
                         <a href="/pda-app/public/menu" class="nav-link text-white">
                             <i class="bi bi-box-seam me-2"></i> Προϊόντα
                         </a>
                     </li>
+
                     <li>
                         <a href="/pda-app/public/statistics/week" class="nav-link text-white">
                             <i class="bi bi-people me-2"></i> Στατιστικά
                         </a>
                     </li>
-                    <li>
-                        <a href="/pda-app/public/reservations" class="nav-link text-white">
-                            <i class="bi bi-people me-2"></i> Κρατήσεις
-                        </a>
-                    </li>
+
                 </ul>
                 <hr>
                 <div class="dropdown">
