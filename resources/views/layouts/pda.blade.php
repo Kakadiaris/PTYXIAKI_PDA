@@ -40,51 +40,62 @@
                     <span class="fs-4">PDA Panel</span>
                 </a>
                 <hr>
+                @php
+                    $rolesWithTablesAccess = ['admin', 'waiter', 'superuser'];
+                @endphp
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="{{ url($homeRoute) }}" class="nav-link active">
+                        <a href="{{ url($homeRoute) }}"
+                            class="nav-link {{ Request::is(trim($homeRoute, '/') . '*') ? 'active' : 'text-white' }}">
                             <i class="bi bi-house me-2"></i> Αρχική
                         </a>
                     </li>
-                    @php
-                        $rolesWithTablesAccess = ['admin', 'waiter', 'superuser'];
-                    @endphp
+
                     @if (in_array($role, $rolesWithTablesAccess))
                         <li>
-                            <a href="/pda-app/public/zones" class="nav-link text-white">
+                            <a href="/pda-app/public/zones"
+                                class="nav-link {{ Request::is('zones*') ? 'active' : 'text-white' }}">
                                 <i class="bi bi-speedometer2 me-2"></i> Zones
                             </a>
                         </li>
                     @endif
+
                     @if (in_array($role, $rolesWithTablesAccess))
                         <li>
-                            <a href="/pda-app/public/tables" class="nav-link text-white">
+                            <a href="/pda-app/public/tables"
+                                class="nav-link {{ Request::is('tables*') ? 'active' : 'text-white' }}">
                                 <i class="bi bi-speedometer2 me-2"></i> Tables
                             </a>
                         </li>
                     @endif
+
                     <li>
-                        <a href="/pda-app/public/orders" class="nav-link text-white">
+                        <a href="/pda-app/public/orders"
+                            class="nav-link {{ Request::is('orders*') ? 'active' : 'text-white' }}">
                             <i class="bi bi-table me-2"></i> Παραγγελίες
                         </a>
                     </li>
+
                     <li>
-                        <a href="/pda-app/public/reservations" class="nav-link text-white">
+                        <a href="/pda-app/public/reservations"
+                            class="nav-link {{ Request::is('reservations*') ? 'active' : 'text-white' }}">
                             <i class="bi bi-people me-2"></i> Κρατήσεις
                         </a>
                     </li>
+
                     <li>
-                        <a href="/pda-app/public/menu" class="nav-link text-white">
+                        <a href="/pda-app/public/menu"
+                            class="nav-link {{ Request::is('menu*') ? 'active' : 'text-white' }}">
                             <i class="bi bi-box-seam me-2"></i> Προϊόντα
                         </a>
                     </li>
 
                     <li>
-                        <a href="/pda-app/public/statistics/week" class="nav-link text-white">
+                        <a href="/pda-app/public/statistics/week"
+                            class="nav-link {{ Request::is('statistics*') ? 'active' : 'text-white' }}">
                             <i class="bi bi-people me-2"></i> Στατιστικά
                         </a>
                     </li>
-
                 </ul>
                 <hr>
                 <div class="dropdown">
