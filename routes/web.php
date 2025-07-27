@@ -13,6 +13,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\ReservationController;
+
 
 
 use App\Models\Table;
@@ -95,6 +97,18 @@ Route::get('/statistics/month', [StatisticController::class, 'showCurrentMonthSt
 Route::get('/statistics/previous-month', [StatisticController::class, 'showPreviousMonthStatistics']);
 Route::get('/statistics/date', [StatisticController::class, 'showStatisticsByDate']);
 Route::get('/statistics/period', [StatisticController::class, 'showStatisticsByPeriod']);
+
+//Routes για Reservations
+Route::middleware('auth')->group(function () {
+    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+});
+Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
+Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+
+
+
+
 
 // Φόρτωση auth routes
 require __DIR__ . '/auth.php';
