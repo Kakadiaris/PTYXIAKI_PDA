@@ -10,7 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{-- Bootstrap ή Tailwind --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <!-- Bootstrap JS (για modal, dropdowns κ.λπ.) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    @yield('scripts')
 </head>
 @php
     $role = auth()->user()->role;
@@ -110,6 +112,8 @@
 
             @yield('content')
         </main>
+        @stack('scripts')
+
 </body>
 
 </html>
