@@ -18,7 +18,7 @@
             <select name="table_id" class="form-select" required>
                 @foreach($tables as $table)
                     <option value="{{ $table->id }}" {{ $table->id == $order->table_id ? 'selected' : '' }}>
-                        Τραπέζι #{{ $table->number }} (Ζώνη {{ $table->zone }})
+                        Τραπέζι #{{ $table->number }} (Ζώνη {{ $table->zone->value }})
                     </option>
                 @endforeach
             </select>

@@ -4,7 +4,7 @@
     <div class="container">
         <h2>Παραγγελία #{{ $order->id }}</h2>
 
-        <p><strong>Τραπέζι:</strong> {{ $order->table->zone }}{{ $order->table->number }}</p>
+        <p><strong>Τραπέζι:</strong> {{ $order->table->zone->value }}{{ $order->table->number }}</p>
         <p><strong>Κατάσταση:</strong> {{ $order->status }}</p>
         <p><strong>Συνολικό Ποσό:</strong> €{{ number_format($order->total, 2) }}</p>
 

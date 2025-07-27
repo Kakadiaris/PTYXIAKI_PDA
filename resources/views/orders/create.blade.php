@@ -12,7 +12,7 @@
                 <label for="table_id" class="form-label">Τραπέζι</label>
                 <select name="table_id" class="form-select" required>
                     @foreach ($tables as $table)
-                        <option value="{{ $table->id }}">{{ $table->zone }}{{ $table->number }}</option>
+                        <option value="{{ $table->id }}">{{ $table->zone->value }}{{ $table->number }}</option>
                     @endforeach
                 </select>
             </div>

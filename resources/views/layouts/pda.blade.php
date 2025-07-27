@@ -54,6 +54,13 @@
                             </a>
                         </li>
                     @endif
+                         @if (in_array($role, $rolesWithTablesAccess))
+                        <li>
+                            <a href="/pda-app/public/zones" class="nav-link text-white">
+                                <i class="bi bi-speedometer2 me-2"></i> Zones
+                            </a>
+                        </li>
+                    @endif
                     <li>
                         <a href="/pda-app/public/orders" class="nav-link text-white">
                             <i class="bi bi-table me-2"></i> Παραγγελίες
