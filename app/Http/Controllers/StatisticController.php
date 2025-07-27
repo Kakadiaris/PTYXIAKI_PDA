@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Statistic;
@@ -15,9 +16,12 @@ class StatisticController extends Controller
         $endOfWeek = Carbon::now()->endOfWeek();
 
         // Λήψη των στατιστικών για την τρέχουσα εβδομάδα
-        $statistics = Statistic::whereBetween('date', [$startOfWeek, $endOfWeek])
-            ->orderBy('sold_count', 'desc') // Στοίχιση κατά πωλήσεις (πιο δημοφιλή προϊόντα)
-            ->get();
+        $statistics = Statistic::with('menuItem')
+            ->whereBetween('date', [$startOfWeek, $endOfWeek])
+            ->orderBy('sold_count', 'desc')
+            ->get()
+            ->filter(fn($stat) => $stat->menuItem !== null);
+
 
         return view('statistics.index', compact('statistics'));
     }
@@ -42,8 +46,8 @@ class StatisticController extends Controller
             Carbon::now()->subMonth()->startOfMonth(), // Πρώτη μέρα του προηγούμενου μήνα
             Carbon::now()->subMonth()->endOfMonth() // Τελευταία μέρα του προηγούμενου μήνα
         ])
-        ->orderBy('sold_count', 'desc')
-        ->get();
+            ->orderBy('sold_count', 'desc')
+            ->get();
 
         return view('statistics.index', compact('statistics'));
     }
@@ -53,7 +57,7 @@ class StatisticController extends Controller
     {
         // Έλεγχος αν παρέχεται η ημερομηνία από το αίτημα
         $date = $request->input('date');
-        
+
         // Έλεγχος αν υπάρχει ημερομηνία, αλλιώς χρησιμοποιούμε την τρέχουσα ημερομηνία
         $statistics = Statistic::whereDate('date', $date ?? Carbon::today())
             ->orderBy('sold_count', 'desc')
