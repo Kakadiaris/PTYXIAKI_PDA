@@ -18,6 +18,17 @@
                         {{ $table->zone->value }}{{ $table->number }}
                     </a>
 
+                    @if ($table->status !== 'free')
+                        <form method="POST" action="{{ route('tables.free', $table->id) }}" class="mt-2">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-sm btn-outline-light w-100">
+                                Επιστροφή σε Free
+                            </button>
+                        </form>
+                    @endif
+
+
 
                     {{-- Κουμπί διαγραφής μόνο για superuser --}}
                     @if (auth()->user()->role === 'superuser')
@@ -79,10 +90,10 @@
                                 </div>
                                 <div class="modal-body">
                                     <p><strong>Όνομα:</strong> {{ $reservation->name }}</p>
-                                    <p><strong>Άτομα:</strong> {{ $reservation->people_count }}</p>
+                                    <p><strong>Άτομα:</strong> {{ $reservation->guest_count }}</p>
                                     <p><strong>Ώρα:</strong>
                                         {{ \Carbon\Carbon::parse($reservation->datetime)->format('H:i') }}</p>
-                                    {{-- Πρόσθεσε ό,τι άλλο πεδίο έχεις --}}
+                                    <p><strong>Σημειώσεις:</strong> {{ $reservation->notes }}</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

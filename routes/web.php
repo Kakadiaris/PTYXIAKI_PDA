@@ -28,6 +28,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tables/create', [TableController::class, 'create'])->name('tables.create');
     Route::post('/tables', [TableController::class, 'store'])->name('tables.store');
     Route::delete('/tables/{table}', [TableController::class, 'destroy'])->name('tables.destroy');
+    Route::patch('/tables/{table}/free', [\App\Http\Controllers\TableController::class, 'markAsFree'])->name('tables.free');
+
 
 });
 

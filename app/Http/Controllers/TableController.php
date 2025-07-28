@@ -21,7 +21,7 @@ class TableController extends Controller
             ->join('zones', 'tables.zone_id', '=', 'zones.id')
             ->orderBy('zones.value')       // ταξινόμηση με βάση το A, B, C
             ->orderBy('tables.number')     // και μετά αριθμητικά
-            ->with(['zone','reservations'])                 // φόρτωσε και τη σχέση
+            ->with(['zone', 'reservations'])                 // φόρτωσε και τη σχέση
             ->get();
         return view('tables.index', compact('tables'));
     }
@@ -79,5 +79,12 @@ class TableController extends Controller
 
         $tables = $zone->tables()->get(); // Φέρνει τα τραπέζια της ζώνης
         return view('tables.by_zone', compact('tables', 'zone'));
+    }
+    public function markAsFree(Table $table)
+    {
+        $table->status = 'free';
+        $table->save();
+
+        return redirect()->back()->with('success', 'Το τραπέζι άλλαξε σε "ελεύθερο".');
     }
 }

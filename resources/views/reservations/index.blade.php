@@ -16,6 +16,7 @@
                     <thead>
                         <tr>
                             <th>Τραπέζι</th>
+                            <th>Όνομα</th>
                             <th>Άτομα</th>
                             <th>Ώρα</th>
                             <th>Χρήστης</th>
@@ -30,6 +31,7 @@
                             <tr>
 
                                 <td>{{ $reservation->table->zone->value }}{{ $reservation->table->number }}</td>
+                                <td>{{ $reservation->name}}</td>
                                 <td>{{ $reservation->guest_count }}</td>
                                 <td>{{ \Carbon\Carbon::parse($reservation->reservation_at)->format('d/m/Y H:i') }}</td>
                                 <td>{{ $reservation->user->name }}</td>
