@@ -9,8 +9,6 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        {{-- Κουμπί για δημιουργία --}}
-        <a href="{{ route('zones.create') }}" class="btn btn-primary mb-3">➕ Προσθήκη Ζώνης</a>
 
         {{-- Πίνακας Ζωνών --}}
         @if ($zones->count())
@@ -34,7 +32,7 @@
                             <td>{{ $zone->created_at->format('d/m/Y H:i') }}</td>
                             <td>
                                 <a href="{{ route('tables.byZone', $zone->value) }}" class="btn btn-sm btn-secondary">
-                                    🪑 Δες Τραπέζια
+                                    Δες Τραπέζια
                                 </a>
                             </td>
 
@@ -44,7 +42,7 @@
                                         onsubmit="return confirm('Διαγραφή ζώνης {{ $zone->value }};');">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-danger">🗑 Διαγραφή</button>
+                                        <button class="btn btn-sm btn-danger">Διαγραφή</button>
                                     </form>
                                 </td>
                             @endif
@@ -52,6 +50,8 @@
                     @endforeach
                 </tbody>
             </table>
+                    {{-- Κουμπί για δημιουργία --}}
+        <a href="{{ route('zones.create') }}" class="btn btn-primary mb-3">Προσθήκη Ζώνης</a>
         @else
             <p class="text-muted">Δεν υπάρχουν ζώνες καταχωρημένες.</p>
         @endif
