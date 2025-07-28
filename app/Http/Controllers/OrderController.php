@@ -67,7 +67,7 @@ class OrderController extends Controller
         $order->status = 'pending'; // αρχική κατάσταση για παραγγελια
         $order->total = 0;
         if ($order->table) {
-            $order->table->status = 'pending';// αρχική κατάσταση τραπεζιού
+            $order->table->status = 'pending'; // αρχική κατάσταση τραπεζιού
             $order->table->save();
         }
         $order->save();
@@ -192,6 +192,12 @@ class OrderController extends Controller
         if (!$order->payment || !$order->payment->method) {
             return redirect()->route('payments.edit', $order->payment->id)
                 ->with('error', 'Πρέπει να δηλωθεί τρόπος πληρωμής πριν την ολοκλήρωση.');
+        }
+
+        $allPaid = $order->orderItems()->where('is_paid', false)->count() === 0;
+
+        if (! $allPaid) {
+            return redirect()->back()->with('error', 'Δεν έχουν πληρωθεί όλα τα είδη της παραγγελίας.');
         }
 
         $order->status = 'paid';
