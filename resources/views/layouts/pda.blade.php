@@ -76,12 +76,14 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="/pda-app/public/reservations"
-                            class="nav-link {{ Request::is('reservations*') ? 'active' : 'text-white' }}">
-                            <i class="bi bi-people me-2"></i> Κρατήσεις
-                        </a>
-                    </li>
+                    @if (in_array($role, $rolesWithTablesAccess))
+                        <li>
+                            <a href="/pda-app/public/reservations"
+                                class="nav-link {{ Request::is('reservations*') ? 'active' : 'text-white' }}">
+                                <i class="bi bi-people me-2"></i> Κρατήσεις
+                            </a>
+                        </li>
+                    @endif
 
                     <li>
                         <a href="/pda-app/public/menu"
@@ -90,12 +92,15 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="/pda-app/public/statistics/week"
-                            class="nav-link {{ Request::is('statistics*') ? 'active' : 'text-white' }}">
-                            <i class="bi bi-people me-2"></i> Στατιστικά
-                        </a>
-                    </li>
+                    @if (in_array($role, $rolesWithTablesAccess))
+                        <li>
+                            <a href="/pda-app/public/statistics/week"
+                                class="nav-link {{ Request::is('statistics*') ? 'active' : 'text-white' }}">
+                                <i class="bi bi-people me-2"></i> Στατιστικά
+                            </a>
+                        </li>
+                    @endif
+
                 </ul>
                 <hr>
                 <div class="dropdown">
