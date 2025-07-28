@@ -28,15 +28,22 @@
                     @endforeach
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Όνομα</label>
+                <input type="string" name="name" id="name" class="form-control"
+                    value="{{ old('name') }}" required min="1">
+            </div>
 
             <div class="mb-3">
                 <label for="guest_count" class="form-label">Αριθμός Ατόμων</label>
-                <input type="number" name="guest_count" id="guest_count" class="form-control" value="{{ old('guest_count') }}" required min="1">
+                <input type="number" name="guest_count" id="guest_count" class="form-control"
+                    value="{{ old('guest_count') }}" required min="1">
             </div>
 
             <div class="mb-3">
                 <label for="reservation_at" class="form-label">Ώρα Κράτησης</label>
-                <input type="datetime-local" name="reservation_at" id="reservation_at" class="form-control" value="{{ old('reservation_at') }}" required>
+                <input type="datetime-local" name="reservation_at" id="reservation_at" class="form-control"
+                    value="{{ old('reservation_at') }}" required>
             </div>
 
             <div class="mb-3">

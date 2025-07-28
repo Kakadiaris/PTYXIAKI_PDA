@@ -16,6 +16,7 @@ class Reservation extends Model
         'guest_count',
         'reservation_at',
         'notes',
+        'name',
     ];
 
     public function table()

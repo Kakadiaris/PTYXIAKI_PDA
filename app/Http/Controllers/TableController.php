@@ -21,7 +21,7 @@ class TableController extends Controller
             ->join('zones', 'tables.zone_id', '=', 'zones.id')
             ->orderBy('zones.value')       // ταξινόμηση με βάση το A, B, C
             ->orderBy('tables.number')     // και μετά αριθμητικά
-            ->with('zone')                 // φόρτωσε και τη σχέση
+            ->with(['zone','reservations'])                 // φόρτωσε και τη σχέση
             ->get();
         return view('tables.index', compact('tables'));
     }

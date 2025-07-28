@@ -32,6 +32,7 @@ class ReservationController extends Controller
             'guest_count' => 'required|integer|min:1',
             'reservation_at' => 'required|date|after_or_equal:now',
             'notes' => 'nullable|string',
+            'name'  => 'required|string',
         ]);
 
         $table = Table::find($request->table_id);
@@ -48,6 +49,7 @@ class ReservationController extends Controller
             'guest_count' => $request->guest_count,
             'reservation_at' => $request->reservation_at,
             'notes' => $request->notes,
+            'name' => $request->name,
         ]);
 
         // Ενημέρωση τραπεζιού ως reserved
