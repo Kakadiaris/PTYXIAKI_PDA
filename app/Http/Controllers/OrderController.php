@@ -197,7 +197,8 @@ class OrderController extends Controller
         $allPaid = $order->orderItems()->where('is_paid', false)->count() === 0;
 
         if (! $allPaid) {
-            return redirect()->back()->with('error', 'Δεν έχουν πληρωθεί όλα τα είδη της παραγγελίας.');
+            return redirect()->route('payments.edit', $order->payment->id)
+                ->with('error', 'Δεν έχουν πλησωθεί όλα τα είδη της παραγγελίας');
         }
 
         $order->status = 'paid';
