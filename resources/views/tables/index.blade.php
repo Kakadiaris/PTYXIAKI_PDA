@@ -10,8 +10,8 @@
 
                     {{-- Κουμπί τραπεζιού --}}
                     <a href="javascript:void(0)" class="btn text-white w-100 py-4"
-                        data-bs-toggle="{{ in_array($table->status, ['free', 'reserved']) ? 'modal' : '' }}"
-                        data-bs-target="{{ $table->status === 'free' ? '#tableModal' . $table->id : ($table->status === 'reserved' && $table->reservations->isNotEmpty() ? '#reservationModal' . $table->id : '') }}"
+                        data-bs-toggle="{{ in_array($table->status, ['free', 'reserved', 'pending', 'paid']) ? 'modal' : '' }}"
+                        data-bs-target="{{ $table->status === 'free' ? '#tableModal' . $table->id : ($table->status === 'reserved' && $table->reservations->isNotEmpty() ? '#reservationModal' . $table->id : ($table->status === 'pending' || $table->status === 'paid' ? '#pendingOrPaidModal' . $table->id : '')) }}"
                         style="font-size: 22px; border-radius: 16px;
           background-color:
               {{ $table->status === 'free' ? '#28a745' : ($table->status === 'pending' ? '#ffc107' : ($table->status === 'reserved' ? '#000000' : '#dc3545')) }};">
@@ -27,8 +27,6 @@
                             </button>
                         </form>
                     @endif
-
-
 
                     {{-- Κουμπί διαγραφής μόνο για superuser --}}
                     @if (auth()->user()->role === 'superuser')
@@ -65,6 +63,53 @@
                                         class="btn btn-success"> Νέα Παραγγελία</a>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         Ακύρωση
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Modal για τραπέζια με κατάσταση 'pending' και 'paid' --}}
+                @if ($table->status === 'pending' || $table->status === 'paid')
+                    <div class="modal fade" id="pendingOrPaidModal{{ $table->id }}" tabindex="-1"
+                        aria-labelledby="pendingOrPaidModalLabel{{ $table->id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content text-start">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="pendingOrPaidModalLabel{{ $table->id }}">
+                                        Τραπέζι {{ $table->zone->value }}{{ $table->number }} - Κατάσταση:
+                                        {{ ucfirst($table->status) }}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Κλείσιμο"></button>
+                                </div>
+                                <div class="modal-body">
+                                    @if ($table->status === 'pending')
+                                        <p>Το τραπέζι είναι σε κατάσταση 'Pending'. Δεν έχει γίνει ακόμα ολοκλήρωση της
+                                            παραγγελίας.</p>
+                                    @elseif ($table->status === 'paid')
+                                        <p>Η παραγγελία για αυτό το τραπέζι έχει ολοκληρωθεί και έχει πληρωθεί.</p>
+                                    @endif
+
+                                    {{-- Εμφάνιση πληροφοριών παραγγελίας αν το τραπέζι είναι 'reserved' ή 'paid' --}}
+                                    @if ($table->orders->isNotEmpty())
+                                        @php
+                                            $order = $table->orders->last(); // Αν υπάρχει παραγγελία
+                                        @endphp
+                                        <h5>Πληροφορίες Παραγγελίας</h5>
+                                        <p><strong>Όνομα που την έκανε:</strong>
+                                            {{ $order->user ? $order->user->name : 'Άγνωστος χρήστης' }}</p>
+                                        <p><strong>Σύνολο:</strong> {{ number_format($order->total, 2) }}€</p>
+                                        <p><strong>Ώρα Παραγγελίας:</strong>
+                                            {{ \Carbon\Carbon::parse($order->created_at)->format('H:i') }}</p>
+                                    @else
+                                        <p>Δεν υπάρχουν παραγγελίες για αυτό το τραπέζι.</p>
+                                    @endif
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Κλείσιμο
                                     </button>
                                 </div>
                             </div>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Reservation;
@@ -18,7 +19,7 @@ class Table extends Model
     ];
     public function zone()
     {
-        return $this->belongsTo(Zone::class);
+        return $this->belongsTo(Zone::class)->withTrashed();
     }
 
     public function reservations()
@@ -30,4 +31,8 @@ class Table extends Model
     {
         return $this->hasOne(Reservation::class)->latest();
     }
+    public function orders()
+{
+    return $this->hasMany(Order::class);
+}
 }
