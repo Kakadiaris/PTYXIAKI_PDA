@@ -142,14 +142,17 @@ class OrderController extends Controller
             'menu_items.*.id' => 'required|exists:menu_items,id',
             'menu_items.*.quantity' => 'required|integer|min:1',
         ]);
+
         $order->table_id = $request->table_id;
         $order->save();
-        //Διαγραφη προηγουμενων αντικειμενων αν θελω
+
+        // Διαγραφή προηγούμενων αντικειμένων
         $order->items()->delete();
 
         $total = 0;
+        $hasKitchenItems = false;
+        $hasBarItems = false;
 
-        //Προσθηκη νεων αντικειμενων
         foreach ($request->menu_items as $menu_item_data) {
             $menuItem = MenuItem::findOrFail($menu_item_data['id']);
             $quantity = (int) $menu_item_data['quantity'];
@@ -163,10 +166,28 @@ class OrderController extends Controller
             ]);
 
             $total += $subtotal;
+
+            // Έλεγχος αν είναι για kitchen ή bar
+            if ($menuItem->target === 'kitchen') {
+                $hasKitchenItems = true;
+            }
+            if ($menuItem->target === 'bar') {
+                $hasBarItems = true;
+            }
         }
+
+        // Reset των flags μόνο αν βρέθηκαν σχετικά items
+        if ($hasKitchenItems) {
+            $order->kitchen_ready_at = null;
+        }
+        if ($hasBarItems) {
+            $order->bar_ready_at = null;
+        }
+
         $order->total = $total;
         $order->save();
 
+        // Αν έχει ήδη δημιουργηθεί πληρωμή, ενημερώνουμε ποσό
         if ($order->payment) {
             $order->payment->update(['amount' => $total]);
         }
@@ -210,5 +231,23 @@ class OrderController extends Controller
             $order->table->save();
         }
         return redirect()->back()->with('success', 'Η παραγγελία ολοκληρώθηκε.');
+    }
+
+    public function markReady(Request $request, $orderId)
+    {
+        $user = auth()->user();
+        $order = Order::findOrFail($orderId);
+
+        if ($user->role === 'kitchen') {
+            $order->kitchen_ready_at = now();
+        }
+
+        if ($user->role === 'bar') {
+            $order->bar_ready_at = now();
+        }
+
+        $order->save();
+
+        return response()->json(['success' => true]);
     }
 }

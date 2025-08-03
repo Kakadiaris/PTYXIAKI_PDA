@@ -110,6 +110,9 @@ Route::delete('/reservations/{reservation}', [ReservationController::class, 'des
 
 
 
+Route::post('/orders/{order}/mark-ready', [OrderController::class, 'markReady'])->name('orders.markReady');
+
+
 
 
 // Φόρτωση auth routes

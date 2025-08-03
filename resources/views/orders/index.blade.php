@@ -30,6 +30,19 @@
                             $userRole = auth()->user()->role;
                         @endphp
 
+                        @if (($userRole === 'kitchen' && !$order->kitchen_ready_at) || ($userRole === 'bar' && !$order->bar_ready_at))
+                            <form action="{{ route('orders.markReady', $order->id) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-info">
+                                    Ολοκλήρωση {{ $userRole === 'kitchen' ? 'Kitchen' : 'Bar' }}
+                                </button>
+                            </form>
+                        @endif
+                        @php
+                            $userRole = auth()->user()->role;
+                        @endphp
+
                         @if ($userRole === 'superuser')
                             <form action="{{ route('orders.destroy', $order) }}" method="POST"
                                 onsubmit="return confirm('Είσαι σίγουρος;');" style="display:inline class="mt-3">
@@ -40,6 +53,14 @@
                         @endif
 
                     </div>
+                    @if ($order->kitchen_ready_at)
+                        <span class="badge bg-success">🍳 Kitchen έτοιμο</span>
+                    @endif
+
+                    @if ($order->bar_ready_at)
+                        <span class="badge bg-success">🍷 Bar έτοιμο</span>
+                    @endif
+
                 </div>
             @endforeach
         @else
