@@ -98,7 +98,7 @@ Route::get('/statistics/week', [StatisticController::class, 'showCurrentWeekStat
 Route::get('/statistics/month', [StatisticController::class, 'showCurrentMonthStatistics']);
 Route::get('/statistics/previous-month', [StatisticController::class, 'showPreviousMonthStatistics']);
 Route::get('/statistics/date', [StatisticController::class, 'showStatisticsByDate']);
-Route::get('/statistics/period', [StatisticController::class, 'showStatisticsByPeriod']);
+Route::get('/statistics/period', [StatisticController::class, 'showStatisticsByPeriod'])->name('statistics.byPeriod');
 
 //Routes για Reservations
 Route::middleware('auth')->group(function () {
