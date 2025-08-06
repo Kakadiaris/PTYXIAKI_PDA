@@ -15,15 +15,42 @@
 
                     @if ($table->status === 'free')
                         {{-- Κουμπί τραπεζιού με ενεργοποίηση modal --}}
-                        <button class="btn text-white w-100 py-4 open-modal-btn"
-                            style="font-size: 22px; border-radius: 16px; background-color: #28a745;"
-                            data-table-id="{{ $table->id }}" data-table-name="{{ $tableName }}">
+                        <a href="javascript:void(0)" class="btn text-white w-100 py-4"
+                           data-bs-toggle="modal"
+                           data-bs-target="#tableModal{{ $table->id }}"
+                           style="font-size: 22px; border-radius: 16px; background-color: #28a745;">
                             {{ $tableName }}
-                        </button>
+                        </a>
+
+                        {{-- Modal δημιουργίας παραγγελίας --}}
+                        <div class="modal fade" id="tableModal{{ $table->id }}" tabindex="-1"
+                             aria-labelledby="tableModalLabel{{ $table->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content text-start">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="tableModalLabel{{ $table->id }}">
+                                            Νέα Παραγγελία για Τραπέζι {{ $tableName }}
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Κλείσιμο"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Θέλεις να δημιουργήσεις νέα παραγγελία για αυτό το τραπέζι;
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ route('orders.create', ['table_id' => $table->id]) }}"
+                                           class="btn btn-success">Νέα Παραγγελία</a>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Ακύρωση
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @else
                         {{-- Μη διαθέσιμο τραπέζι --}}
                         <a href="#" class="btn text-white w-100 py-4"
-                            style="font-size: 22px; border-radius: 16px;
+                           style="font-size: 22px; border-radius: 16px;
                                   background-color:
                                   {{ $table->status === 'pending' ? '#ffc107' : '#dc3545' }};">
                             {{ $tableName }}
@@ -32,8 +59,8 @@
 
                     {{-- Κουμπί διαγραφής --}}
                     <form action="{{ route('tables.destroy', $table->id) }}" method="POST"
-                        onsubmit="return confirm('Είσαι σίγουρος ότι θέλεις να διαγράψεις το τραπέζι {{ $tableName }};')"
-                        class="position-absolute top-0 end-0 mt-1 me-1">
+                          onsubmit="return confirm('Είσαι σίγουρος ότι θέλεις να διαγράψεις το τραπέζι {{ $tableName }};')"
+                          class="position-absolute top-0 end-0 mt-1 me-1">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-sm btn-danger px-2 py-1" title="Διαγραφή">
@@ -44,47 +71,4 @@
             @endforeach
         </div>
     </div>
-
-    {{-- Modal για επιβεβαίωση δημιουργίας παραγγελίας --}}
-    <div class="modal fade" id="orderConfirmModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="orderModalLabel">Νέα Παραγγελία</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Κλείσιμο"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="orderModalText">Θέλεις να δημιουργήσεις νέα παραγγελία για αυτό το τραπέζι;</p>
-                </div>
-                <div class="modal-footer">
-                    <a id="confirmOrderBtn" href="#" class="btn btn-success">Νέα Παραγγελία</a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ακύρωση</button>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = new bootstrap.Modal(document.getElementById('orderConfirmModal'));
-            const modalTitle = document.getElementById('orderModalLabel');
-            const modalText = document.getElementById('orderModalText');
-            const confirmBtn = document.getElementById('confirmOrderBtn');
-
-            document.querySelectorAll('.open-modal-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const tableName = this.dataset.tableName;
-                    const tableId = this.dataset.tableId;
-
-                    modalTitle.innerText = `Νέα Παραγγελία για Τραπέζι ${tableName}`;
-                    modalText.innerText =
-                        `Θέλεις να δημιουργήσεις νέα παραγγελία για αυτό το τραπέζι;`;
-                    confirmBtn.href = `/orders/create?table_id=${tableId}`;
-                    modal.show();
-                });
-            });
-        });
-    </script>
 @endsection
