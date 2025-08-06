@@ -17,7 +17,7 @@
                         <a href="{{ route('orders.show', $order) }}" class="btn btn-dark">Προβολή</a>
 
                         @if ($order->status === 'paid')
-                            <span class="btn btn-dark disabled">Η παραγγελία έχει ολοκληρωθεί</span>
+                            <span class="btn btn-dark disabled">Ολοκληρωμένη</span>
                         @elseif ($order->status === 'completed')
                             <span class="btn btn-dark disabled">Ολοκληρωμένη</span>
                         @else
@@ -43,6 +43,13 @@
                             $userRole = auth()->user()->role;
                         @endphp
 
+                        @if ($order->kitchen_ready_at)
+                            <span class="btn btn-success disabled">Kitchen έτοιμο</span>
+                        @endif
+
+                        @if ($order->bar_ready_at)
+                            <span class="btn btn-success disabled">Bar έτοιμο</span>
+                        @endif
                         @if ($userRole === 'superuser')
                             <form action="{{ route('orders.destroy', $order) }}" method="POST"
                                 onsubmit="return confirm('Είσαι σίγουρος;');" style="display:inline class="mt-3">
@@ -52,14 +59,8 @@
                             </form>
                         @endif
 
-                    </div>
-                    @if ($order->kitchen_ready_at)
-                        <span class="badge bg-success">🍳 Kitchen έτοιμο</span>
-                    @endif
 
-                    @if ($order->bar_ready_at)
-                        <span class="badge bg-success">🍷 Bar έτοιμο</span>
-                    @endif
+                    </div>
 
                 </div>
             @endforeach
