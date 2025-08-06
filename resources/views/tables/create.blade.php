@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4">➕ Δημιουργία Τραπεζιού</h2>
+        <h2 class="mb-4">Δημιουργία Τραπεζιού</h2>
 
         @if ($errors->any())
             <div class="alert alert-danger text-start">

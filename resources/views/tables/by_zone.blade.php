@@ -1,7 +1,7 @@
 @extends('layouts.pda')
 
 @section('content')
-    <a href="{{ route('tables.create') }}" class="btn btn-primary mb-4">➕ Νέο Τραπέζι</a>
+    <a href="{{ route('tables.create') }}" class="btn btn-primary mb-4">Νέο Τραπέζι</a>
 
     <div class="container text-center">
         <h2 class="mb-4">Τραπέζια</h2>
@@ -57,7 +57,7 @@
                     <p id="orderModalText">Θέλεις να δημιουργήσεις νέα παραγγελία για αυτό το τραπέζι;</p>
                 </div>
                 <div class="modal-footer">
-                    <a id="confirmOrderBtn" href="#" class="btn btn-success">➕ Νέα Παραγγελία</a>
+                    <a id="confirmOrderBtn" href="#" class="btn btn-success">Νέα Παραγγελία</a>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ακύρωση</button>
                 </div>
             </div>

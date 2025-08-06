@@ -51,7 +51,7 @@
             @endforeach
         </div>
 
-        <button type="button" id="add-menu-item" class="btn btn-secondary mt-2">➕ Προσθήκη Είδους</button>
+        <button type="button" id="add-menu-item" class="btn btn-secondary mt-2">Προσθήκη Είδους</button>
 
         <hr>
 

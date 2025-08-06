@@ -4,7 +4,7 @@
         <h1 class="mb-4">🍽️ Μενού</h1>
         <div class="mb-4 text-end">
             <a href="{{ route('menu.create') }}" class="btn btn-primary new-order-btn">
-                ➕ Προσθήκη Προϊόντος
+                 Προσθήκη Προϊόντος
             </a>
         </div>
         @if ($items->count())
