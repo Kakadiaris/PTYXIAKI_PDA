@@ -53,6 +53,7 @@
                     {{-- Κουμπί για δημιουργία --}}
         <a href="{{ route('zones.create') }}" class="btn btn-primary mb-3">Προσθήκη Ζώνης</a>
         @else
+        <a href="{{ route('zones.create') }}" class="btn btn-primary mb-3">Προσθήκη Ζώνης</a>
             <p class="text-muted">Δεν υπάρχουν ζώνες καταχωρημένες.</p>
         @endif
     </div>
