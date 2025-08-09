@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2>✏️ Επεξεργασία Παραγγελίας #{{ $order->id }}</h2>
+    <h2>Επεξεργασία Παραγγελίας #{{ $order->id }}</h2>
 
     @if(session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
@@ -55,8 +55,8 @@
 
         <hr>
 
-        <button type="submit" class="btn btn-success">💾 Αποθήκευση</button>
-        <a href="{{ route('orders.index') }}" class="btn btn-secondary">↩ Επιστροφή</a>
+        <button type="submit" class="btn btn-success">Αποθήκευση</button>
+        <a href="{{ route('orders.index') }}" class="btn btn-secondary">Επιστροφή</a>
     </form>
     @if($errors->any())
     <div class="alert alert-danger">

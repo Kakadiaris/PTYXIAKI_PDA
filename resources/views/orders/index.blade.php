@@ -21,7 +21,7 @@
                         @elseif ($order->status === 'completed')
                             <span class="btn btn-dark disabled">Ολοκληρωμένη</span>
                         @else
-                            <form action="{{ route('orders.complete', $order) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('orders.complete', $order) }}" method="POST" class="pan_form">
                                 @csrf
                                 <button type="submit" class="btn btn-success">Ολοκλήρωση</button>
                             </form>
@@ -32,7 +32,7 @@
 
                         @if (($userRole === 'kitchen' && !$order->kitchen_ready_at) || ($userRole === 'bar' && !$order->bar_ready_at))
                             <form action="{{ route('orders.markReady', $order->id) }}" method="POST"
-                                style="display:inline;">
+                                class="pan_form">
                                 @csrf
                                 <button type="submit" class="btn btn-info">
                                     Ολοκλήρωση {{ $userRole === 'kitchen' ? 'Kitchen' : 'Bar' }}
@@ -52,7 +52,7 @@
                         @endif
                         @if ($userRole === 'superuser')
                             <form action="{{ route('orders.destroy', $order) }}" method="POST"
-                                onsubmit="return confirm('Είσαι σίγουρος;');" style="display:inline class="mt-3">
+                                onsubmit="return confirm('Είσαι σίγουρος;');" class="pan_form mt-3>
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Διαγραφή Παραγγελίας</button>
