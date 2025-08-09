@@ -29,9 +29,11 @@
                 <label for="category" class="form-label">Κατηγορία</label>
                 <select name="category" class="form-select" required>
                     <option value="">-- Επιλογή Κατηγορίας --</option>
+                    <option value="kafes">Καφές</option>
+                    <option value="ximos">Χυμός-Αναψυκτικά</option>
+                    <option value="pota">Ποτά</option>
                     <option value="snack">Snack</option>
-                    <option value="coffee">Καφές</option>
-                    <option value="drinks">Ποτά</option>
+                    <option value="fagito">Φαγητό</option>
                 </select>
             </div>
 
