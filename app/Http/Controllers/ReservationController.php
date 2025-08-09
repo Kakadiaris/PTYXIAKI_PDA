@@ -53,7 +53,7 @@ class ReservationController extends Controller
         ]);
 
         // Ενημέρωση τραπεζιού ως reserved
-        $table->update(['status' => 'reserved']);
+        // $table->update(['status' => 'reserved']);
 
         return redirect()->route('tables.view')->with('success', 'Η κράτηση καταχωρήθηκε.');
     }
