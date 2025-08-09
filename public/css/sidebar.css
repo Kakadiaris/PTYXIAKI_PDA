@@ -1,14 +1,21 @@
         .pan_back {
             background-color: #2c3e50;
         }
-        .pan_main{
+
+        .pan_main {
             margin: 30px;
             background-color: white;
             border-radius: 20px;
         }
-        .pan_side{
+
+        .pan_side {
             background-color: #0d6efd;
         }
+
+      .pan_a {
+        text-decoration: none;
+        color: white;
+}
 
 
         /* .sidebar {

@@ -2,7 +2,7 @@
 <html lang="el">
 
 <head>
-    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}?v={{ filemtime(public_path('css/sidebar.css')) }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <meta charset="UTF-8">
@@ -118,6 +118,17 @@
                                 </button>
                             </form>
                         </li>
+                        @if ($role == 'superuser')
+                            <li>
+                                @csrf
+                                <button type="submit"
+                                    class="dropdown-item text-white bg-transparent border-0 w-100 text-start">
+                                    <a class="pan_a" href="/pda-app/public/register">
+                                        Εγγραφή
+                                    </a>
+                                </button>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </nav>
