@@ -37,9 +37,6 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $menu_items = \App\Models\MenuItem::all();
@@ -47,9 +44,7 @@ class OrderController extends Controller
         return view('orders.create', compact('tables', 'menu_items'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         //
@@ -143,6 +138,9 @@ class OrderController extends Controller
             'menu_items.*.quantity' => 'required|integer|min:1',
         ]);
 
+        //Παιρνω το status της παραγγελιας
+        $wasPaid = $order->status === 'paid';
+
         $order->table_id = $request->table_id;
         $order->save();
 
@@ -183,7 +181,16 @@ class OrderController extends Controller
         if ($hasBarItems) {
             $order->bar_ready_at = null;
         }
-
+        // αν ήταν paid και έγινε edit, γυρνά σε pending
+        if ($wasPaid) {
+            $order->status  = 'pending';
+            // και το τραπέζι πίσω σε pending
+            if ($order->table) {
+                $order->table->status = 'pending';
+                $order->table->save();
+            }
+        }
+        
         $order->total = $total;
         $order->save();
 
