@@ -144,6 +144,8 @@ class OrderController extends Controller
         $order->table_id = $request->table_id;
         $order->save();
 
+        //  snapshot των παλιών order_items για να κρατήσουμε is_paid & payment_method
+        $prevItems = $order->items()->get()->keyBy('menu_item_id');
         // Διαγραφή προηγούμενων αντικειμένων
         $order->items()->delete();
 
@@ -155,12 +157,20 @@ class OrderController extends Controller
             $menuItem = MenuItem::findOrFail($menu_item_data['id']);
             $quantity = (int) $menu_item_data['quantity'];
             $subtotal = $menuItem->price * $quantity;
+            $prev = $prevItems->get($menuItem->id); // ή το σύνθετο κλειδί αν έχεις
+
 
             OrderItem::create([
                 'order_id' => $order->id,
                 'menu_item_id' => $menuItem->id,
                 'quantity' => $quantity,
                 'price' => $menuItem->price,
+                 // Κρατάμε τα υπάρχοντα πεδία αν υπήρχαν
+                'is_paid'        => $prev->is_paid ?? 0,
+                'payment_method' => $prev->payment_method
+                              ?? ($order->payment_method
+                                  ?? optional($order->payment)->method
+                                  ?? null),
             ]);
 
             $total += $subtotal;
@@ -190,14 +200,15 @@ class OrderController extends Controller
                 $order->table->save();
             }
         }
-        
-        $order->total = $total;
-        $order->save();
 
+        $order->total = $total;
         // Αν έχει ήδη δημιουργηθεί πληρωμή, ενημερώνουμε ποσό
         if ($order->payment) {
             $order->payment->update(['amount' => $total]);
         }
+
+        $order->save();
+
 
         return redirect()->route('orders.index')->with('success', 'Η παραγγελία ενημερώθηκε.');
     }

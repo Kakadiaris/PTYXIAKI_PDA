@@ -11,9 +11,11 @@ class OrderItem extends Model
         'menu_item_id',
         'quantity',
         'price',
-        'subtotal',
+        'is_paid',
+        'payment_method',
     ];
-        public function order()
+    protected $casts = ['is_paid' => 'boolean'];
+    public function order()
     {
         return $this->belongsTo(Order::class);
     }
