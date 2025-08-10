@@ -53,6 +53,8 @@ class OrderController extends Controller
             'menu_items' => 'required|array|min:1',
             'menu_items.*.id' => 'required|exists:menu_items,id',
             'menu_items.*.quantity' => 'required|integer|min:1',
+            'menu_items.*.notes' => 'nullable|string|max:1000', // προαιρετικό σχόλιο
+
         ]);
 
         $total = 0;
@@ -73,6 +75,10 @@ class OrderController extends Controller
             $menuItem = MenuItem::findOrFail($menu_item_data['id']);
             $quantity = (int)$menu_item_data['quantity'];
             $subtotal = $menuItem->price * $quantity;
+            // καθάρισε το notes: άδειο => null
+            $notes = isset($menu_item_data['notes']) && trim($menu_item_data['notes']) !== ''
+                ? trim($menu_item_data['notes'])
+                : null;
 
             // Δημιουργία εγγραφής στη συνδεδεμένη σχέση (order_items)
             OrderItem::create([
@@ -80,6 +86,7 @@ class OrderController extends Controller
                 'menu_item_id' => $menuItem->id,
                 'quantity' => $quantity,
                 'price' => $menuItem->price,
+                'notes'        => $notes,
                 // 'subtotal' => $subtotal,
             ]);
 
@@ -136,6 +143,7 @@ class OrderController extends Controller
             'menu_items' => 'required|array|min:1',
             'menu_items.*.id' => 'required|exists:menu_items,id',
             'menu_items.*.quantity' => 'required|integer|min:1',
+            'menu_items.*.notes' => 'nullable|string|max:1000',
         ]);
 
         //Παιρνω το status της παραγγελιας
@@ -158,19 +166,22 @@ class OrderController extends Controller
             $quantity = (int) $menu_item_data['quantity'];
             $subtotal = $menuItem->price * $quantity;
             $prev = $prevItems->get($menuItem->id); // ή το σύνθετο κλειδί αν έχεις
-
+            $notes = array_key_exists('notes', $menu_item_data)
+                ? (trim((string) $menu_item_data['notes']) !== '' ? trim($menu_item_data['notes']) : null)
+                : ($prev->notes ?? null);
 
             OrderItem::create([
                 'order_id' => $order->id,
                 'menu_item_id' => $menuItem->id,
                 'quantity' => $quantity,
                 'price' => $menuItem->price,
-                 // Κρατάμε τα υπάρχοντα πεδία αν υπήρχαν
+                'notes' => $notes,
+                // Κρατάμε τα υπάρχοντα πεδία αν υπήρχαν
                 'is_paid'        => $prev->is_paid ?? 0,
                 'payment_method' => $prev->payment_method
-                              ?? ($order->payment_method
-                                  ?? optional($order->payment)->method
-                                  ?? null),
+                    ?? ($order->payment_method
+                        ?? optional($order->payment)->method
+                        ?? null),
             ]);
 
             $total += $subtotal;

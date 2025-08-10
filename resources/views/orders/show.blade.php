@@ -16,6 +16,7 @@
                     <th>Ποσότητα</th>
                     <th>Τιμή</th>
                     <th>Σύνολο</th>
+                    <th>Σημειώσεις</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                         <td>{{ $item->quantity }}</td>
                         <td>€{{ number_format($item->price, 2) }}</td>
                         <td>€{{ number_format($item->price * $item->quantity, 2) }}</td>
+                        <td>{{$item->notes}}
                     </tr>
                 @endforeach
             </tbody>

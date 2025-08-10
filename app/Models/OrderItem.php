@@ -13,6 +13,8 @@ class OrderItem extends Model
         'price',
         'is_paid',
         'payment_method',
+        'notes',
+
     ];
     protected $casts = ['is_paid' => 'boolean'];
     public function order()
