@@ -108,6 +108,8 @@
                                     @endif
                                 </div>
                                 <div class="modal-footer">
+                                    <a href="{{ route('orders.show', $order) }}"
+                                        class="btn btn-success"> Προβολή Παραγγελίας</a>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         Κλείσιμο
                                     </button>
