@@ -11,10 +11,37 @@ use Illuminate\Http\Request;
 class MenuItemController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $items = \App\Models\MenuItem::all();
-        return view('menu.index', compact('items'));
+          $selected = $request->query('category');
+
+    // Φέρε όλες τις μοναδικές κατηγορίες από τη ΒΔ
+    $categories = \App\Models\MenuItem::query()
+        ->select('category')
+        ->whereNotNull('category')
+        ->distinct()
+        ->orderBy('category')
+        ->pluck('category')
+        ->toArray();
+
+    // Προαιρετικό map για ελληνικά labels (αν έχεις σταθερά keys)
+    $categoryLabels = [
+        'cofee'  => 'Καφές',
+        'snack'  => 'Σνακ',
+        'drinks' => 'Ποτά',
+        'ximos'  => 'Αναψυκτικά - Χυμοί',
+    ];
+
+    $query = \App\Models\MenuItem::query();
+    if ($selected && in_array($selected, $categories, true)) {
+        $query->where('category', $selected);
+    }
+
+    $items = $query->orderBy('name')->get();
+    $groupedItems = $items->groupBy('category');
+
+    return view('menu.index', compact('items','groupedItems','categories','categoryLabels','selected'));
+
     }
     public function create()
     {

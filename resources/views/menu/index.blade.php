@@ -20,6 +20,24 @@
             </a>
         </div>
 
+        <div class="d-flex justify-content-between align-items-center mb-4 gap-2 flex-wrap">
+            <a href="{{ route('menu.create') }}" class="btn btn-primary new-order-btn">Προσθήκη Προϊόντος</a>
+
+            <form method="GET" action="{{ route('menu.index') }}" class="d-flex align-items-center gap-2">
+                <select name="category" class="form-select w-auto">
+                    <option value="">Όλες οι κατηγορίες</option>
+                    @foreach ($categories as $cat)
+                        <option value="{{ $cat }}" {{ $selected === $cat ? 'selected' : '' }}>
+                            {{ $categoryLabels[$cat] ?? ucfirst($cat) }}
+                        </option>
+                    @endforeach
+                </select>
+                <button type="submit" class="btn btn-outline-secondary">Φιλτράρισμα</button>
+                @if ($selected)
+                    <a href="{{ route('menu.index') }}" class="btn btn-link">Καθαρισμός</a>
+                @endif
+            </form>
+        </div>
         @forelse ($groupedItems as $category => $products)
             <h3 class="mt-4">{{ $categoryLabels[$category] ?? ucfirst($category) }}</h3>
             <div class="row row-cols-1 row-cols-md-3 g-4">
