@@ -3,10 +3,9 @@
     @php
         // Ομαδοποίηση προϊόντων ανά κατηγορία
         $groupedItems = $items->groupBy('category');
-
         // Map για να δείχνουμε ελληνικά labels
         $categoryLabels = [
-            'cofee' => 'Καφές',
+            'kafes' => 'Καφές',
             'snack' => 'Σνακ',
             'drinks' => 'Ποτά',
             'ximos' => 'Αναψυκτικα - Χυμοι',
@@ -14,15 +13,8 @@
     @endphp
     <div class="container mt-4">
         <h1 class="mb-4">Μενού</h1>
-        <div class="mb-4 text-end">
-            <a href="{{ route('menu.create') }}" class="btn btn-primary new-order-btn">
-                Προσθήκη Προϊόντος
-            </a>
-        </div>
-
         <div class="d-flex justify-content-between align-items-center mb-4 gap-2 flex-wrap">
             <a href="{{ route('menu.create') }}" class="btn btn-primary new-order-btn">Προσθήκη Προϊόντος</a>
-
             <form method="GET" action="{{ route('menu.index') }}" class="d-flex align-items-center gap-2">
                 <select name="category" class="form-select w-auto">
                     <option value="">Όλες οι κατηγορίες</option>
