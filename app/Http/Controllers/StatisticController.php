@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Statistic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StatisticController extends Controller
 {
@@ -46,7 +47,7 @@ class StatisticController extends Controller
      */
     public function showStatisticsByDate(Request $request)
     {
-        $date = $request->input('date') 
+        $date = $request->input('date')
             ? Carbon::parse($request->input('date'))->startOfDay()
             : Carbon::today();
 
@@ -74,15 +75,27 @@ class StatisticController extends Controller
      */
     private function renderStatistics(Carbon $startDate, Carbon $endDate)
     {
-        $statistics = Statistic::with('menuItem')
-            ->whereBetween('date', [$startDate, $endDate])
-            ->orderBy('sold_count', 'desc')
-            ->whereHas('menuItem')
+        $stats = Statistic::query()
+            ->select([
+                'menu_item_id',
+                DB::raw('SUM(sold_count) AS total_sold'),
+                DB::raw('SUM(total_revenue) AS total_revenue'),
+            ])
+            ->whereBetween('date', [$startDate->toDateString(), $endDate->toDateString()])
+            ->groupBy('menu_item_id')
+            ->with('menuItem')
+            ->orderByDesc('total_sold')
             ->get();
 
-        $labels = $statistics->pluck('menuItem.name');
-        $sales = $statistics->pluck('sold_count');
+        $labels = $stats->map(fn($s) => $s->menuItem->name);
+        $sales  = $stats->pluck('total_sold');
 
-        return view('statistics.index', compact('statistics', 'labels', 'sales', 'startDate', 'endDate'));
+        return view('statistics.index', [
+            'statistics' => $stats,
+            'labels'     => $labels,
+            'sales'      => $sales,
+            'startDate'  => $startDate,
+            'endDate'    => $endDate,
+        ]);
     }
 }
