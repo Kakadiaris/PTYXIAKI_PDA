@@ -56,8 +56,8 @@
                 @endforeach
             </select>
             <input type="number" name="menu_items[${itemIndex}][quantity]" class="form-control d-inline-block w-25" min="1" value="1" required>
-                                <input type="text" name="menu_items[0][notes]" class="form-control d-inline-block w-25"
-                        placeholder="Σχόλιο (π.χ. σκέτο)"> 
+                               <input type="text" name="menu_items[${itemIndex}][notes]" class="form-control d-inline-block w-25"
+       placeholder="Σχόλιο (π.χ. σκέτο)">
             <button type="button" class="btn btn-danger btn-sm remove-item">✖</button>
         `;
 
