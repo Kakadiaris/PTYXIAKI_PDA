@@ -62,8 +62,10 @@ class ReservationController extends Controller
         // Soft delete κράτησης
         $reservation->delete();
 
-        // Επαναφορά τραπεζιού σε "free"
-        $reservation->table->update(['status' => 'free']);
+        // Επαναφορά τραπεζιού σε "free" μόνο αν είναι "reserved"
+        if ($reservation->table && $reservation->table->status === 'reserved') {
+            $reservation->table->update(['status' => 'free']);
+        }
 
         return redirect()->route('reservations.index')->with('success', 'Η κράτηση ακυρώθηκε.');
     }

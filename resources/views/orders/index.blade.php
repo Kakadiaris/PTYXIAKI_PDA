@@ -16,15 +16,15 @@
                     <div class="order-actions">
                         <a href="{{ route('orders.show', $order) }}" class="btn btn-dark">Προβολή</a>
 
-                        @if ($order->status === 'paid')
-                            <span class="btn btn-dark disabled">Ολοκληρωμένη</span>
-                        @elseif ($order->status === 'completed')
-                            <span class="btn btn-dark disabled">Ολοκληρωμένη</span>
-                        @else
-                            <form action="{{ route('orders.complete', $order) }}" method="POST" class="pan_form">
-                                @csrf
-                                <button type="submit" class="btn btn-success">Ολοκλήρωση</button>
-                            </form>
+                        @if (!in_array(auth()->user()->role, ['kitchen', 'bar']))
+                            @if ($order->status === 'paid' || $order->status === 'completed')
+                                <span class="btn btn-dark disabled">Ολοκληρωμένη</span>
+                            @else
+                                <form action="{{ route('orders.complete', $order) }}" method="POST" class="pan_form">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Ολοκλήρωση</button>
+                                </form>
+                            @endif
                         @endif
                         @php
                             $userRole = auth()->user()->role;

@@ -24,10 +24,10 @@ class UpdateTableStatusesAhead extends Command
 
         // Κάνε reserved όσα έχουν επερχόμενη κράτηση (αν δεν είναι occupied)
         Table::whereIn('id', $upcomingIds)
-            ->where('status', '!=', 'pending')
+            ->where('status', '!=', 'pending','paid')
             ->update(['status' => 'reserved']);
 
-        $this->info("Έχουν γίνει update όσα τραπέζια πρέπει για τις επόμενες {$hours} hours.");
+        $this->info("Έχουν γίνει update όσα τραπέζια πρέπει για τις επόμενες {$hours} ώρες.");
         return self::SUCCESS;
     }
 }

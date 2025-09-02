@@ -37,7 +37,7 @@ class ZoneController extends Controller
             abort(403, 'Δεν έχεις δικαίωμα διαγραφής ζώνης.');
         }
 
-        $zone->delete(); // Soft delete (αν το έχεις ενεργό στο μοντέλο)
+        $zone->delete(); // Soft delete
 
         return redirect()->route('zones.index')->with('success', 'Η ζώνη διαγράφηκε.');
     }

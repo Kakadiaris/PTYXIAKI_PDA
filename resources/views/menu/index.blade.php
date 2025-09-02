@@ -14,7 +14,11 @@
     <div class="container mt-4">
         <h1 class="mb-4">Μενού</h1>
         <div class="d-flex justify-content-between align-items-center mb-4 gap-2 flex-wrap">
-            <a href="{{ route('menu.create') }}" class="btn btn-primary new-order-btn">Προσθήκη Προϊόντος</a>
+            @if (auth()->user()->role !== 'kitchen' && auth()->user()->role !== 'bar')
+                <a href="{{ route('menu.create') }}" class="btn btn-primary new-order-btn">
+                    Προσθήκη Προϊόντος
+                </a>
+            @endif
             <form method="GET" action="{{ route('menu.index') }}" class="d-flex align-items-center gap-2">
                 <select name="category" class="form-select w-auto">
                     <option value="">Όλες οι κατηγορίες</option>
@@ -38,7 +42,7 @@
                         <div class="card h-100 shadow-sm">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">{{ $item->description ?? 'Χωρίς περιγραφή.' }}</p>
+                                {{-- <p class="card-text">{{ $item->description ?? 'Χωρίς περιγραφή.' }}</p> --}}
                             </div>
                             <div class="card-footer d-flex justify-content-between align-items-center">
                                 <span class="fw-bold">{{ number_format($item->price, 2) }} €</span>

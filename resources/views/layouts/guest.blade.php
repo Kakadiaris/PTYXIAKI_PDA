@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'PDA') }}</title>
-        <link rel="icon" href="{{ asset('uploads/favicon.png') }}" type="image/png">
+        <link rel="icon" href="{{ asset('/uploads/favicon.png') }}" type="image/png">
 
 
         <!-- Fonts -->
