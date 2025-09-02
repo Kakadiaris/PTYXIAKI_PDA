@@ -55,7 +55,7 @@
                         <li>
                             <a href="/pda-app/public/zones"
                                 class="nav-link {{ Request::is('zones*') ? 'active' : 'text-white' }}">
-                                <i class="bi bi-speedometer2 me-2"></i> Zones
+                                <i class="bi bi-speedometer2 me-2"></i> Ζώνες
                             </a>
                         </li>
                     @endif
@@ -64,7 +64,7 @@
                         <li>
                             <a href="/pda-app/public/tables"
                                 class="nav-link {{ Request::is('tables*') ? 'active' : 'text-white' }}">
-                                <i class="bi bi-speedometer2 me-2"></i> Tables
+                                <i class="bi bi-speedometer2 me-2"></i> Τραπέζια
                             </a>
                         </li>
                     @endif
@@ -76,7 +76,7 @@
                         </a>
                     </li>
 
-                    @if (in_array($role, $rolesWithTablesAccess))
+                    @if (Auth::user() && in_array(Auth::user()->role, ['superuser', 'admin']))
                         <li>
                             <a href="/pda-app/public/reservations"
                                 class="nav-link {{ Request::is('reservations*') ? 'active' : 'text-white' }}">
