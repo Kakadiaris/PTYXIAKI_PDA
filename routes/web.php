@@ -14,6 +14,7 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\ReservationController;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -103,13 +104,37 @@ Route::get('/statistics/date', [StatisticController::class, 'showStatisticsByDat
 Route::get('/statistics/period', [StatisticController::class, 'showStatisticsByPeriod'])->name('statistics.byPeriod');
 
 //Routes για Reservations
-Route::middleware('auth')->group(function () {
-    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
-});
-Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
-Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
-Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+// Routes για Reservations μόνο για superuser και admin
+Route::middleware(['auth'])->group(function () {
 
+    Route::post('/reservations', function () {
+        if (!in_array(Auth::user()->role, ['superuser', 'admin'])) {
+            abort(403, 'Δεν έχετε δικαίωμα πρόσβασης.');
+        }
+        return app(ReservationController::class)->store();
+    })->name('reservations.store');
+
+    Route::get('/reservations/create', function () {
+        if (!in_array(Auth::user()->role, ['superuser', 'admin'])) {
+            abort(403, 'Δεν έχετε δικαίωμα πρόσβασης.');
+        }
+        return app(ReservationController::class)->create();
+    })->name('reservations.create');
+
+    Route::get('/reservations', function () {
+        if (!in_array(Auth::user()->role, ['superuser', 'admin'])) {
+            abort(403, 'Δεν έχετε δικαίωμα πρόσβασης.');
+        }
+        return app(ReservationController::class)->index();
+    })->name('reservations.index');
+
+    Route::delete('/reservations/{reservation}', function ($reservation) {
+        if (!in_array(Auth::user()->role, ['superuser', 'admin'])) {
+            abort(403, 'Δεν έχετε δικαίωμα πρόσβασης.');
+        }
+        return app(ReservationController::class)->destroy($reservation);
+    })->name('reservations.destroy');
+});
 
 
 Route::post('/orders/{order}/mark-ready', [OrderController::class, 'markReady'])->name('orders.markReady');
