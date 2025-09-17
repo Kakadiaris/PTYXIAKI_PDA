@@ -1,5 +1,5 @@
         .pan_back {
-            background-color: #2c3e50;
+            background-color: #2c3e50 !important;
         }
 
         .pan_main {
@@ -12,40 +12,66 @@
             background-color: #0d6efd;
         }
 
-      .pan_a {
-        text-decoration: none;
-        color: white;
-}
-
-
-        /* .sidebar {
-            height: 100vh;
-            background-color: #2c3e50;
-            color: rgb(255, 255, 255);
-            padding: 1rem;
-        }
-
-        .sidebar a {
-            color: white;
-            display: block;            min-height: 100vh;
-
-            margin-bottom: 1rem;
+        .pan_a {
             text-decoration: none;
+            color: white;
         }
 
-        .sidebar a:hover {
-            color: #f1c40f;
+        /* Κάτω από 940px: κρύψε το desktop sidebar, δείξε το κουμπί */
+        @media (max-width: 940px) {
+            .desktop-sidebar-wrapper {
+                display: none !important;
+            }
+
+            .btn-toggle-menu {
+                display: inline-flex !important;
+            }
+
+            .pan_main {
+                padding: 16px;
+            }
         }
 
-        .active-link {
-            border-left: 4px solid #f1c40f;
-            padding-left: 0.5rem;
+        /* Από 941px και πάνω: κρύψε το κουμπί, άσε το sidebar */
+        @media (min-width: 941px) {
+            .btn-toggle-menu {
+                display: none !important;
+            }
+
+            .pan_main {
+                padding: 24px 32px;
+            }
         }
 
-        .content-wrapper {
-            background-color: #fff;
-            padding: 2rem;
-            min-height: 100vh;
-            border-top-left-radius: 16px;
-            border-bottom-left-radius: 16px;
-        } */
+        /* Κάτω από 940px κρύψε το ΠΑΛΙΟ sidebar */
+        @media (max-width: 940px) {
+            #sidebarNav {
+                display: none !important;
+            }
+        }
+
+        /* Στο offcanvas, τα links να φαίνονται κανονικά σε λευκό φόντο */
+        .offcanvas .nav-link,
+        .offcanvas a.nav-link.text-white {
+            color: #fff !important;
+            /* σκούρο κείμενο */
+        }
+
+        .offcanvas .nav-link.active {
+            color: #fff !important;
+            background-color: #0d6efd !important;
+            /* Bootstrap primary */
+        }
+
+
+        /* Βεβαιώσου ότι τα links είναι clickable στο offcanvas */
+.offcanvas .nav-link { pointer-events: auto; }
+
+/* Χρωματάκι στο offcanvas */
+.offcanvas .nav-link,
+.offcanvas a.nav-link.text-white { color: white !important; }
+
+.offcanvas .nav-link.active {
+  color: #fff !important;
+  background-color: #0d6efd !important;
+}
