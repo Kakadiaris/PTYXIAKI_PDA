@@ -52,7 +52,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Καταχώρηση</button>
-            <a href="{{ route('tables.view') }}" class="btn btn-secondary">↩ Επιστροφή</a>
+            <a href="{{ route('tables.view') }}" class="btn btn-secondary">Επιστροφή</a>
         </form>
     </div>
 @endsection

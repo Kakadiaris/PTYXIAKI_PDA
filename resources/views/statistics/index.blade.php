@@ -13,19 +13,17 @@
     <table>
         <thead>
             <tr>
-                <th>Προϊόν</th>
-                <th>Πωλήσεις</th>
-                <th>Συνολικός Τζίρος</th>
-                <th>Ημερομηνία</th>
+                <th> Προϊόν </th>
+                <th> Έσοδα </th>
+                <th> Ημερομηνία</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($statistics as $stat)
                 <tr>
-                    <td>{{ $stat->menuItem->name }}</td>
-                    <td>{{ $stat->sold_count }}</td>
-                    <td>{{ number_format($stat->total_revenue, 2) }}</td>
-                    <td>{{ \Carbon\Carbon::parse($stat->date)->format('d-m-Y') }}</td>
+                    <td> {{ $stat->menuItem->name }} </td>
+                    <td> {{ number_format($stat->total_revenue, 2) }} </td>
+                    <td> {{ \Carbon\Carbon::parse($stat->date)->format('d-m-Y') }}</td>
                 </tr>
             @endforeach
         </tbody>

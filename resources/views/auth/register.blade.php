@@ -56,7 +56,7 @@
            <div class="flex items-center justify-end mt-4">
 
                <x-primary-button class="btn btn-primary mb-3">
-                   {{ __('Register') }}
+                   {{ __('Δημιουργία') }}
                </x-primary-button>
            </div>
        </form>

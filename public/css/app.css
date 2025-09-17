@@ -26,7 +26,10 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    align-items: center;
+    /* ✅ Κεντράρει κάθετα τα κουμπιά και το badge */
 }
+
 .order-box.order-completed {
     background-color: #4cff00;
     font-weight: bold;
@@ -55,15 +58,10 @@
     padding: 10px 20px;
     font-size: 16px;
 }
+
 .order-actions form,
 .order-actions a,
 .order-actions span {
     display: inline-block;
     margin-right: 10px;
 }
-
-
-
-
-
-

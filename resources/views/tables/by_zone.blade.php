@@ -56,7 +56,9 @@
                         class="position-absolute top-0 end-0 mt-1 me-1">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-sm btn-danger px-2 py-1" title="Διαγραφή">🗑</button>
+                        @if (auth()->user()->role === 'superuser')
+                            <button class="btn btn-sm btn-danger px-2 py-1" title="Διαγραφή">🗑</button>
+                        @endif
                     </form>
                 </div>
 
