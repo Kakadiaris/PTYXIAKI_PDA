@@ -64,4 +64,5 @@
 .order-actions span {
     display: inline-block;
     margin-right: 10px;
-}
+}.table td, .table th { word-wrap: break-word; }
+.notes-cell { word-break: break-word; overflow-wrap: anywhere; }

@@ -58,7 +58,7 @@
                         <li>
                             <a href="/pda-app/public/zones"
                                 class="nav-link {{ Request::is('zones*') ? 'active' : 'text-white' }}">
-                                <i class="bi bi-speedometer2 me-2"></i> Ζώνες
+                                <i class="bi bi-grid-3x3-gap me-2"></i> Ζώνες
                             </a>
                         </li>
                     @endif

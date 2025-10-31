@@ -105,7 +105,7 @@ Route::get('/statistics/period', [StatisticController::class, 'showStatisticsByP
 
 //Routes για Reservations
 // Routes για Reservations μόνο για superuser και admin
-Route::middleware(['auth', 'role:superuser,admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');

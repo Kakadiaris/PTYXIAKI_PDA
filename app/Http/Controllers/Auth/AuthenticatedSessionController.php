@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use Illuminate\Validation\ValidationException;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
@@ -31,7 +32,7 @@ class AuthenticatedSessionController extends Controller
 
     if (! Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
         throw ValidationException::withMessages([
-            'email' => __('auth.failed'),
+            'email' => __('Λάθος email ή κωδικός'),
         ]);
     }
 

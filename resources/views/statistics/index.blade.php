@@ -15,7 +15,6 @@
             <tr>
                 <th> Προϊόν </th>
                 <th> Έσοδα </th>
-                <th> Ημερομηνία</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +22,6 @@
                 <tr>
                     <td> {{ $stat->menuItem->name }} </td>
                     <td> {{ number_format($stat->total_revenue, 2) }} </td>
-                    <td> {{ \Carbon\Carbon::parse($stat->date)->format('d-m-Y') }}</td>
                 </tr>
             @endforeach
         </tbody>

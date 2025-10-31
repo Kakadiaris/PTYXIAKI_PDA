@@ -53,9 +53,12 @@
                                 onsubmit="return confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το προϊόν;');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" title="Διαγραφή">
-                                    Διαγραφή
-                                </button>
+                                @if (auth()->user()->role === 'superuser')
+                                    <button type="submit" class="btn btn-sm btn-danger" title="Διαγραφή">
+                                        Διαγραφή
+                                    </button>
+                                @endif
+
                             </form>
                         </div>
                     </div>
